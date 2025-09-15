@@ -1,0 +1,2 @@
+source /Users/xin/UPC/SEU/lab1/build/bootloader/gdbinit/symbols
+source /Users/xin/UPC/SEU/lab1/build/bootloader/gdbinit/connect
