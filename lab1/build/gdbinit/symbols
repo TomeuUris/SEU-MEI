@@ -13,8 +13,8 @@ end
 
 # Load bootloader symbols
 set confirm off
-    add-symbol-file /Users/xin/UPC/SEU/lab1/build/bootloader/bootloader.elf
+    add-symbol-file /Users/xin/UPC/SEU/SEU/lab1/build/bootloader/bootloader.elf
 set confirm on
 
 # Load application symbols
-file /Users/xin/UPC/SEU/lab1/build/lab1.elf
+file /Users/xin/UPC/SEU/SEU/lab1/build/lab1.elf

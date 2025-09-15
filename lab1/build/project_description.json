@@ -1,13 +1,13 @@
 {
     "version":            "1.2",
     "project_name":       "lab1",
-    "project_version":    "1",
-    "project_path":       "/Users/xin/UPC/SEU/lab1",
+    "project_version":    "c5bb718-dirty",
+    "project_path":       "/Users/xin/UPC/SEU/SEU/lab1",
     "idf_path":           "/Users/xin/esp/v5.5.1/esp-idf",
-    "build_dir":          "/Users/xin/UPC/SEU/lab1/build",
-    "config_file":        "/Users/xin/UPC/SEU/lab1/sdkconfig",
-    "config_defaults":    "/Users/xin/UPC/SEU/lab1/sdkconfig.defaults",
-    "bootloader_elf":     "/Users/xin/UPC/SEU/lab1/build/bootloader/bootloader.elf",
+    "build_dir":          "/Users/xin/UPC/SEU/SEU/lab1/build",
+    "config_file":        "/Users/xin/UPC/SEU/SEU/lab1/sdkconfig",
+    "config_defaults":    "/Users/xin/UPC/SEU/SEU/lab1/sdkconfig.defaults",
+    "bootloader_elf":     "/Users/xin/UPC/SEU/SEU/lab1/build/bootloader/bootloader.elf",
     "app_elf":            "lab1.elf",
     "app_bin":            "lab1.bin",
     "build_type":         "flash_app",
@@ -22,11 +22,11 @@
     "c_compiler":         "/Users/xin/.espressif/tools/riscv32-esp-elf/esp-14.2.0_20241119/riscv32-esp-elf/bin/riscv32-esp-elf-gcc",
     "config_environment" : {
         "COMPONENT_KCONFIGS" : "/Users/xin/esp/v5.5.1/esp-idf/components/efuse/Kconfig;/Users/xin/esp/v5.5.1/esp-idf/components/esp_common/Kconfig;/Users/xin/esp/v5.5.1/esp-idf/components/esp_driver_bitscrambler/Kconfig;/Users/xin/esp/v5.5.1/esp-idf/components/esp_driver_gpio/Kconfig;/Users/xin/esp/v5.5.1/esp-idf/components/esp_driver_rmt/Kconfig;/Users/xin/esp/v5.5.1/esp-idf/components/esp_driver_spi/Kconfig;/Users/xin/esp/v5.5.1/esp-idf/components/esp_hw_support/Kconfig;/Users/xin/esp/v5.5.1/esp-idf/components/esp_mm/Kconfig;/Users/xin/esp/v5.5.1/esp-idf/components/esp_partition/Kconfig;/Users/xin/esp/v5.5.1/esp-idf/components/esp_pm/Kconfig;/Users/xin/esp/v5.5.1/esp-idf/components/esp_rom/Kconfig;/Users/xin/esp/v5.5.1/esp-idf/components/esp_security/Kconfig;/Users/xin/esp/v5.5.1/esp-idf/components/esp_system/Kconfig;/Users/xin/esp/v5.5.1/esp-idf/components/esp_timer/Kconfig;/Users/xin/esp/v5.5.1/esp-idf/components/freertos/Kconfig;/Users/xin/esp/v5.5.1/esp-idf/components/hal/Kconfig;/Users/xin/esp/v5.5.1/esp-idf/components/heap/Kconfig;/Users/xin/esp/v5.5.1/esp-idf/components/log/Kconfig;/Users/xin/esp/v5.5.1/esp-idf/components/mbedtls/Kconfig;/Users/xin/esp/v5.5.1/esp-idf/components/newlib/Kconfig;/Users/xin/esp/v5.5.1/esp-idf/components/pthread/Kconfig;/Users/xin/esp/v5.5.1/esp-idf/components/soc/Kconfig;/Users/xin/esp/v5.5.1/esp-idf/components/spi_flash/Kconfig",
-        "COMPONENT_KCONFIGS_PROJBUILD" : "/Users/xin/esp/v5.5.1/esp-idf/components/bootloader/Kconfig.projbuild;/Users/xin/esp/v5.5.1/esp-idf/components/esp_app_format/Kconfig.projbuild;/Users/xin/esp/v5.5.1/esp-idf/components/esp_rom/Kconfig.projbuild;/Users/xin/esp/v5.5.1/esp-idf/components/esptool_py/Kconfig.projbuild;/Users/xin/esp/v5.5.1/esp-idf/components/partition_table/Kconfig.projbuild;/Users/xin/UPC/SEU/lab1/main/Kconfig.projbuild"
+        "COMPONENT_KCONFIGS_PROJBUILD" : "/Users/xin/esp/v5.5.1/esp-idf/components/bootloader/Kconfig.projbuild;/Users/xin/esp/v5.5.1/esp-idf/components/esp_app_format/Kconfig.projbuild;/Users/xin/esp/v5.5.1/esp-idf/components/esp_rom/Kconfig.projbuild;/Users/xin/esp/v5.5.1/esp-idf/components/esptool_py/Kconfig.projbuild;/Users/xin/esp/v5.5.1/esp-idf/components/partition_table/Kconfig.projbuild;/Users/xin/UPC/SEU/SEU/lab1/main/Kconfig.projbuild"
     },
     "common_component_reqs": [ "cxx", "newlib", "freertos", "esp_hw_support", "heap", "log", "soc", "hal", "esp_rom", "esp_common", "esp_system", "riscv" ],
     "build_components" : [ "app_update", "bootloader", "bootloader_support", "cxx", "efuse", "esp_app_format", "esp_bootloader_format", "esp_common", "esp_driver_bitscrambler", "esp_driver_gpio", "esp_driver_rmt", "esp_driver_spi", "esp_hw_support", "esp_mm", "esp_partition", "esp_pm", "esp_rom", "esp_security", "esp_system", "esp_timer", "espressif__led_strip", "esptool_py", "freertos", "hal", "heap", "log", "main", "mbedtls", "newlib", "partition_table", "pthread", "riscv", "soc", "spi_flash", "" ],
-    "build_component_paths" : [ "/Users/xin/esp/v5.5.1/esp-idf/components/app_update", "/Users/xin/esp/v5.5.1/esp-idf/components/bootloader", "/Users/xin/esp/v5.5.1/esp-idf/components/bootloader_support", "/Users/xin/esp/v5.5.1/esp-idf/components/cxx", "/Users/xin/esp/v5.5.1/esp-idf/components/efuse", "/Users/xin/esp/v5.5.1/esp-idf/components/esp_app_format", "/Users/xin/esp/v5.5.1/esp-idf/components/esp_bootloader_format", "/Users/xin/esp/v5.5.1/esp-idf/components/esp_common", "/Users/xin/esp/v5.5.1/esp-idf/components/esp_driver_bitscrambler", "/Users/xin/esp/v5.5.1/esp-idf/components/esp_driver_gpio", "/Users/xin/esp/v5.5.1/esp-idf/components/esp_driver_rmt", "/Users/xin/esp/v5.5.1/esp-idf/components/esp_driver_spi", "/Users/xin/esp/v5.5.1/esp-idf/components/esp_hw_support", "/Users/xin/esp/v5.5.1/esp-idf/components/esp_mm", "/Users/xin/esp/v5.5.1/esp-idf/components/esp_partition", "/Users/xin/esp/v5.5.1/esp-idf/components/esp_pm", "/Users/xin/esp/v5.5.1/esp-idf/components/esp_rom", "/Users/xin/esp/v5.5.1/esp-idf/components/esp_security", "/Users/xin/esp/v5.5.1/esp-idf/components/esp_system", "/Users/xin/esp/v5.5.1/esp-idf/components/esp_timer", "/Users/xin/UPC/SEU/lab1/managed_components/espressif__led_strip", "/Users/xin/esp/v5.5.1/esp-idf/components/esptool_py", "/Users/xin/esp/v5.5.1/esp-idf/components/freertos", "/Users/xin/esp/v5.5.1/esp-idf/components/hal", "/Users/xin/esp/v5.5.1/esp-idf/components/heap", "/Users/xin/esp/v5.5.1/esp-idf/components/log", "/Users/xin/UPC/SEU/lab1/main", "/Users/xin/esp/v5.5.1/esp-idf/components/mbedtls", "/Users/xin/esp/v5.5.1/esp-idf/components/newlib", "/Users/xin/esp/v5.5.1/esp-idf/components/partition_table", "/Users/xin/esp/v5.5.1/esp-idf/components/pthread", "/Users/xin/esp/v5.5.1/esp-idf/components/riscv", "/Users/xin/esp/v5.5.1/esp-idf/components/soc", "/Users/xin/esp/v5.5.1/esp-idf/components/spi_flash", "" ],
+    "build_component_paths" : [ "/Users/xin/esp/v5.5.1/esp-idf/components/app_update", "/Users/xin/esp/v5.5.1/esp-idf/components/bootloader", "/Users/xin/esp/v5.5.1/esp-idf/components/bootloader_support", "/Users/xin/esp/v5.5.1/esp-idf/components/cxx", "/Users/xin/esp/v5.5.1/esp-idf/components/efuse", "/Users/xin/esp/v5.5.1/esp-idf/components/esp_app_format", "/Users/xin/esp/v5.5.1/esp-idf/components/esp_bootloader_format", "/Users/xin/esp/v5.5.1/esp-idf/components/esp_common", "/Users/xin/esp/v5.5.1/esp-idf/components/esp_driver_bitscrambler", "/Users/xin/esp/v5.5.1/esp-idf/components/esp_driver_gpio", "/Users/xin/esp/v5.5.1/esp-idf/components/esp_driver_rmt", "/Users/xin/esp/v5.5.1/esp-idf/components/esp_driver_spi", "/Users/xin/esp/v5.5.1/esp-idf/components/esp_hw_support", "/Users/xin/esp/v5.5.1/esp-idf/components/esp_mm", "/Users/xin/esp/v5.5.1/esp-idf/components/esp_partition", "/Users/xin/esp/v5.5.1/esp-idf/components/esp_pm", "/Users/xin/esp/v5.5.1/esp-idf/components/esp_rom", "/Users/xin/esp/v5.5.1/esp-idf/components/esp_security", "/Users/xin/esp/v5.5.1/esp-idf/components/esp_system", "/Users/xin/esp/v5.5.1/esp-idf/components/esp_timer", "/Users/xin/UPC/SEU/SEU/lab1/managed_components/espressif__led_strip", "/Users/xin/esp/v5.5.1/esp-idf/components/esptool_py", "/Users/xin/esp/v5.5.1/esp-idf/components/freertos", "/Users/xin/esp/v5.5.1/esp-idf/components/hal", "/Users/xin/esp/v5.5.1/esp-idf/components/heap", "/Users/xin/esp/v5.5.1/esp-idf/components/log", "/Users/xin/UPC/SEU/SEU/lab1/main", "/Users/xin/esp/v5.5.1/esp-idf/components/mbedtls", "/Users/xin/esp/v5.5.1/esp-idf/components/newlib", "/Users/xin/esp/v5.5.1/esp-idf/components/partition_table", "/Users/xin/esp/v5.5.1/esp-idf/components/pthread", "/Users/xin/esp/v5.5.1/esp-idf/components/riscv", "/Users/xin/esp/v5.5.1/esp-idf/components/soc", "/Users/xin/esp/v5.5.1/esp-idf/components/spi_flash", "" ],
     "build_component_info" : {
         "app_update": {
             "alias": "idf::app_update",
@@ -39,7 +39,7 @@
             "priv_reqs": [ "esptool_py", "efuse", "spi_flash" ],
             "managed_reqs": [],
             "managed_priv_reqs": [],
-            "file": "/Users/xin/UPC/SEU/lab1/build/esp-idf/app_update/libapp_update.a",
+            "file": "/Users/xin/UPC/SEU/SEU/lab1/build/esp-idf/app_update/libapp_update.a",
             "sources": [ "/Users/xin/esp/v5.5.1/esp-idf/components/app_update/esp_ota_ops.c", "/Users/xin/esp/v5.5.1/esp-idf/components/app_update/esp_ota_app_desc.c" ],
             "include_dirs": [ "include" ]
         },
@@ -69,7 +69,7 @@
             "priv_reqs": [ "spi_flash", "mbedtls", "efuse", "heap", "esp_bootloader_format", "esp_app_format" ],
             "managed_reqs": [],
             "managed_priv_reqs": [],
-            "file": "/Users/xin/UPC/SEU/lab1/build/esp-idf/bootloader_support/libbootloader_support.a",
+            "file": "/Users/xin/UPC/SEU/SEU/lab1/build/esp-idf/bootloader_support/libbootloader_support.a",
             "sources": [ "/Users/xin/esp/v5.5.1/esp-idf/components/bootloader_support/src/bootloader_common.c", "/Users/xin/esp/v5.5.1/esp-idf/components/bootloader_support/src/bootloader_common_loader.c", "/Users/xin/esp/v5.5.1/esp-idf/components/bootloader_support/src/bootloader_clock_init.c", "/Users/xin/esp/v5.5.1/esp-idf/components/bootloader_support/src/bootloader_mem.c", "/Users/xin/esp/v5.5.1/esp-idf/components/bootloader_support/src/bootloader_random.c", "/Users/xin/esp/v5.5.1/esp-idf/components/bootloader_support/src/bootloader_efuse.c", "/Users/xin/esp/v5.5.1/esp-idf/components/bootloader_support/src/flash_encrypt.c", "/Users/xin/esp/v5.5.1/esp-idf/components/bootloader_support/src/secure_boot.c", "/Users/xin/esp/v5.5.1/esp-idf/components/bootloader_support/src/bootloader_random_esp32c6.c", "/Users/xin/esp/v5.5.1/esp-idf/components/bootloader_support/bootloader_flash/src/bootloader_flash.c", "/Users/xin/esp/v5.5.1/esp-idf/components/bootloader_support/bootloader_flash/src/flash_qio_mode.c", "/Users/xin/esp/v5.5.1/esp-idf/components/bootloader_support/bootloader_flash/src/bootloader_flash_config_esp32c6.c", "/Users/xin/esp/v5.5.1/esp-idf/components/bootloader_support/src/bootloader_utility.c", "/Users/xin/esp/v5.5.1/esp-idf/components/bootloader_support/src/flash_partitions.c", "/Users/xin/esp/v5.5.1/esp-idf/components/bootloader_support/src/esp_image_format.c", "/Users/xin/esp/v5.5.1/esp-idf/components/bootloader_support/src/bootloader_sha.c", "/Users/xin/esp/v5.5.1/esp-idf/components/bootloader_support/src/esp32c6/bootloader_ecdsa.c", "/Users/xin/esp/v5.5.1/esp-idf/components/bootloader_support/src/esp32c6/secure_boot_secure_features.c" ],
             "include_dirs": [ "include", "bootloader_flash/include" ]
         },
@@ -84,7 +84,7 @@
             "priv_reqs": [ "esp_system", "pthread" ],
             "managed_reqs": [],
             "managed_priv_reqs": [],
-            "file": "/Users/xin/UPC/SEU/lab1/build/esp-idf/cxx/libcxx.a",
+            "file": "/Users/xin/UPC/SEU/SEU/lab1/build/esp-idf/cxx/libcxx.a",
             "sources": [ "/Users/xin/esp/v5.5.1/esp-idf/components/cxx/cxx_exception_stubs.cpp", "/Users/xin/esp/v5.5.1/esp-idf/components/cxx/cxx_guards.cpp", "/Users/xin/esp/v5.5.1/esp-idf/components/cxx/cxx_init.cpp" ],
             "include_dirs": []
         },
@@ -99,7 +99,7 @@
             "priv_reqs": [ "bootloader_support", "soc", "spi_flash", "esp_system", "esp_partition", "esp_app_format" ],
             "managed_reqs": [],
             "managed_priv_reqs": [],
-            "file": "/Users/xin/UPC/SEU/lab1/build/esp-idf/efuse/libefuse.a",
+            "file": "/Users/xin/UPC/SEU/SEU/lab1/build/esp-idf/efuse/libefuse.a",
             "sources": [ "/Users/xin/esp/v5.5.1/esp-idf/components/efuse/esp32c6/esp_efuse_table.c", "/Users/xin/esp/v5.5.1/esp-idf/components/efuse/esp32c6/esp_efuse_fields.c", "/Users/xin/esp/v5.5.1/esp-idf/components/efuse/esp32c6/esp_efuse_rtc_calib.c", "/Users/xin/esp/v5.5.1/esp-idf/components/efuse/esp32c6/esp_efuse_utility.c", "/Users/xin/esp/v5.5.1/esp-idf/components/efuse/src/esp_efuse_api.c", "/Users/xin/esp/v5.5.1/esp-idf/components/efuse/src/esp_efuse_fields.c", "/Users/xin/esp/v5.5.1/esp-idf/components/efuse/src/esp_efuse_utility.c", "/Users/xin/esp/v5.5.1/esp-idf/components/efuse/src/efuse_controller/keys/with_key_purposes/esp_efuse_api_key.c", "/Users/xin/esp/v5.5.1/esp-idf/components/efuse/src/esp_efuse_startup.c" ],
             "include_dirs": [ "include", "esp32c6/include" ]
         },
@@ -114,7 +114,7 @@
             "priv_reqs": [],
             "managed_reqs": [],
             "managed_priv_reqs": [],
-            "file": "/Users/xin/UPC/SEU/lab1/build/esp-idf/esp_app_format/libesp_app_format.a",
+            "file": "/Users/xin/UPC/SEU/SEU/lab1/build/esp-idf/esp_app_format/libesp_app_format.a",
             "sources": [ "/Users/xin/esp/v5.5.1/esp-idf/components/esp_app_format/esp_app_desc.c" ],
             "include_dirs": [ "include" ]
         },
@@ -129,7 +129,7 @@
             "priv_reqs": [],
             "managed_reqs": [],
             "managed_priv_reqs": [],
-            "file": "/Users/xin/UPC/SEU/lab1/build/esp-idf/esp_bootloader_format/libesp_bootloader_format.a",
+            "file": "/Users/xin/UPC/SEU/SEU/lab1/build/esp-idf/esp_bootloader_format/libesp_bootloader_format.a",
             "sources": [ "/Users/xin/esp/v5.5.1/esp-idf/components/esp_bootloader_format/esp_bootloader_desc.c" ],
             "include_dirs": [ "include" ]
         },
@@ -144,7 +144,7 @@
             "priv_reqs": [],
             "managed_reqs": [],
             "managed_priv_reqs": [],
-            "file": "/Users/xin/UPC/SEU/lab1/build/esp-idf/esp_common/libesp_common.a",
+            "file": "/Users/xin/UPC/SEU/SEU/lab1/build/esp-idf/esp_common/libesp_common.a",
             "sources": [ "/Users/xin/esp/v5.5.1/esp-idf/components/esp_common/src/esp_err_to_name.c" ],
             "include_dirs": [ "include" ]
         },
@@ -174,7 +174,7 @@
             "priv_reqs": [ "esp_pm" ],
             "managed_reqs": [],
             "managed_priv_reqs": [],
-            "file": "/Users/xin/UPC/SEU/lab1/build/esp-idf/esp_driver_gpio/libesp_driver_gpio.a",
+            "file": "/Users/xin/UPC/SEU/SEU/lab1/build/esp-idf/esp_driver_gpio/libesp_driver_gpio.a",
             "sources": [ "/Users/xin/esp/v5.5.1/esp-idf/components/esp_driver_gpio/src/gpio.c", "/Users/xin/esp/v5.5.1/esp-idf/components/esp_driver_gpio/src/gpio_glitch_filter_ops.c", "/Users/xin/esp/v5.5.1/esp-idf/components/esp_driver_gpio/src/rtc_io.c", "/Users/xin/esp/v5.5.1/esp-idf/components/esp_driver_gpio/src/dedic_gpio.c", "/Users/xin/esp/v5.5.1/esp-idf/components/esp_driver_gpio/src/gpio_pin_glitch_filter.c", "/Users/xin/esp/v5.5.1/esp-idf/components/esp_driver_gpio/src/gpio_flex_glitch_filter.c", "/Users/xin/esp/v5.5.1/esp-idf/components/esp_driver_gpio/src/gpio_etm.c" ],
             "include_dirs": [ "include" ]
         },
@@ -189,7 +189,7 @@
             "priv_reqs": [ "esp_pm", "esp_driver_gpio", "esp_driver_bitscrambler", "esp_mm" ],
             "managed_reqs": [],
             "managed_priv_reqs": [],
-            "file": "/Users/xin/UPC/SEU/lab1/build/esp-idf/esp_driver_rmt/libesp_driver_rmt.a",
+            "file": "/Users/xin/UPC/SEU/SEU/lab1/build/esp-idf/esp_driver_rmt/libesp_driver_rmt.a",
             "sources": [ "/Users/xin/esp/v5.5.1/esp-idf/components/esp_driver_rmt/src/rmt_common.c", "/Users/xin/esp/v5.5.1/esp-idf/components/esp_driver_rmt/src/rmt_encoder.c", "/Users/xin/esp/v5.5.1/esp-idf/components/esp_driver_rmt/src/rmt_encoder_bytes.c", "/Users/xin/esp/v5.5.1/esp-idf/components/esp_driver_rmt/src/rmt_encoder_copy.c", "/Users/xin/esp/v5.5.1/esp-idf/components/esp_driver_rmt/src/rmt_encoder_simple.c", "/Users/xin/esp/v5.5.1/esp-idf/components/esp_driver_rmt/src/rmt_rx.c", "/Users/xin/esp/v5.5.1/esp-idf/components/esp_driver_rmt/src/rmt_tx.c" ],
             "include_dirs": [ "include" ]
         },
@@ -204,7 +204,7 @@
             "priv_reqs": [ "esp_timer", "esp_mm", "esp_driver_gpio" ],
             "managed_reqs": [],
             "managed_priv_reqs": [],
-            "file": "/Users/xin/UPC/SEU/lab1/build/esp-idf/esp_driver_spi/libesp_driver_spi.a",
+            "file": "/Users/xin/UPC/SEU/SEU/lab1/build/esp-idf/esp_driver_spi/libesp_driver_spi.a",
             "sources": [ "/Users/xin/esp/v5.5.1/esp-idf/components/esp_driver_spi/src/gpspi/spi_common.c", "/Users/xin/esp/v5.5.1/esp-idf/components/esp_driver_spi/src/gpspi/spi_master.c", "/Users/xin/esp/v5.5.1/esp-idf/components/esp_driver_spi/src/gpspi/spi_slave.c", "/Users/xin/esp/v5.5.1/esp-idf/components/esp_driver_spi/src/gpspi/spi_slave_hd.c" ],
             "include_dirs": [ "include" ]
         },
@@ -219,7 +219,7 @@
             "priv_reqs": [ "efuse", "spi_flash", "bootloader_support", "esp_security", "hal", "esp_driver_gpio", "esp_timer", "esp_pm", "esp_mm" ],
             "managed_reqs": [],
             "managed_priv_reqs": [],
-            "file": "/Users/xin/UPC/SEU/lab1/build/esp-idf/esp_hw_support/libesp_hw_support.a",
+            "file": "/Users/xin/UPC/SEU/SEU/lab1/build/esp-idf/esp_hw_support/libesp_hw_support.a",
             "sources": [ "/Users/xin/esp/v5.5.1/esp-idf/components/esp_hw_support/cpu.c", "/Users/xin/esp/v5.5.1/esp-idf/components/esp_hw_support/port/esp32c6/esp_cpu_intr.c", "/Users/xin/esp/v5.5.1/esp-idf/components/esp_hw_support/esp_memory_utils.c", "/Users/xin/esp/v5.5.1/esp-idf/components/esp_hw_support/port/esp32c6/cpu_region_protect.c", "/Users/xin/esp/v5.5.1/esp-idf/components/esp_hw_support/esp_clk.c", "/Users/xin/esp/v5.5.1/esp-idf/components/esp_hw_support/clk_ctrl_os.c", "/Users/xin/esp/v5.5.1/esp-idf/components/esp_hw_support/hw_random.c", "/Users/xin/esp/v5.5.1/esp-idf/components/esp_hw_support/intr_alloc.c", "/Users/xin/esp/v5.5.1/esp-idf/components/esp_hw_support/mac_addr.c", "/Users/xin/esp/v5.5.1/esp-idf/components/esp_hw_support/periph_ctrl.c", "/Users/xin/esp/v5.5.1/esp-idf/components/esp_hw_support/revision.c", "/Users/xin/esp/v5.5.1/esp-idf/components/esp_hw_support/rtc_module.c", "/Users/xin/esp/v5.5.1/esp-idf/components/esp_hw_support/regi2c_ctrl.c", "/Users/xin/esp/v5.5.1/esp-idf/components/esp_hw_support/esp_gpio_reserve.c", "/Users/xin/esp/v5.5.1/esp-idf/components/esp_hw_support/sar_periph_ctrl_common.c", "/Users/xin/esp/v5.5.1/esp-idf/components/esp_hw_support/port/esp32c6/io_mux.c", "/Users/xin/esp/v5.5.1/esp-idf/components/esp_hw_support/port/esp32c6/esp_clk_tree.c", "/Users/xin/esp/v5.5.1/esp-idf/components/esp_hw_support/dma/esp_dma_utils.c", "/Users/xin/esp/v5.5.1/esp-idf/components/esp_hw_support/dma/gdma_link.c", "/Users/xin/esp/v5.5.1/esp-idf/components/esp_hw_support/spi_bus_lock.c", "/Users/xin/esp/v5.5.1/esp-idf/components/esp_hw_support/clk_utils.c", "/Users/xin/esp/v5.5.1/esp-idf/components/esp_hw_support/port/esp_clk_tree_common.c", "/Users/xin/esp/v5.5.1/esp-idf/components/esp_hw_support/spi_share_hw_ctrl.c", "/Users/xin/esp/v5.5.1/esp-idf/components/esp_hw_support/adc_share_hw_ctrl.c", "/Users/xin/esp/v5.5.1/esp-idf/components/esp_hw_support/sleep_retention.c", "/Users/xin/esp/v5.5.1/esp-idf/components/esp_hw_support/sleep_modem.c", "/Users/xin/esp/v5.5.1/esp-idf/components/esp_hw_support/sleep_modes.c", "/Users/xin/esp/v5.5.1/esp-idf/components/esp_hw_support/sleep_console.c", "/Users/xin/esp/v5.5.1/esp-idf/components/esp_hw_support/sleep_usb.c", "/Users/xin/esp/v5.5.1/esp-idf/components/esp_hw_support/sleep_gpio.c", "/Users/xin/esp/v5.5.1/esp-idf/components/esp_hw_support/sleep_event.c", "/Users/xin/esp/v5.5.1/esp-idf/components/esp_hw_support/sleep_system_peripheral.c", "/Users/xin/esp/v5.5.1/esp-idf/components/esp_hw_support/dma/gdma.c", "/Users/xin/esp/v5.5.1/esp-idf/components/esp_hw_support/deprecated/gdma_legacy.c", "/Users/xin/esp/v5.5.1/esp-idf/components/esp_hw_support/dma/gdma_sleep_retention.c", "/Users/xin/esp/v5.5.1/esp-idf/components/esp_hw_support/dma/gdma_etm.c", "/Users/xin/esp/v5.5.1/esp-idf/components/esp_hw_support/dma/esp_async_memcpy.c", "/Users/xin/esp/v5.5.1/esp-idf/components/esp_hw_support/dma/async_memcpy_gdma.c", "/Users/xin/esp/v5.5.1/esp-idf/components/esp_hw_support/port/esp32c6/systimer.c", "/Users/xin/esp/v5.5.1/esp-idf/components/esp_hw_support/esp_etm.c", "/Users/xin/esp/v5.5.1/esp-idf/components/esp_hw_support/port/pau_regdma.c", "/Users/xin/esp/v5.5.1/esp-idf/components/esp_hw_support/port/regdma_link.c", "/Users/xin/esp/v5.5.1/esp-idf/components/esp_hw_support/modem_clock.c", "/Users/xin/esp/v5.5.1/esp-idf/components/esp_hw_support/mspi_timing_tuning/mspi_timing_tuning.c", "/Users/xin/esp/v5.5.1/esp-idf/components/esp_hw_support/sleep_wake_stub.c", "/Users/xin/esp/v5.5.1/esp-idf/components/esp_hw_support/esp_clock_output.c", "/Users/xin/esp/v5.5.1/esp-idf/components/esp_hw_support/power_supply/brownout.c", "/Users/xin/esp/v5.5.1/esp-idf/components/esp_hw_support/port/esp32c6/rtc_clk_init.c", "/Users/xin/esp/v5.5.1/esp-idf/components/esp_hw_support/port/esp32c6/rtc_clk.c", "/Users/xin/esp/v5.5.1/esp-idf/components/esp_hw_support/port/esp32c6/pmu_param.c", "/Users/xin/esp/v5.5.1/esp-idf/components/esp_hw_support/port/esp32c6/pmu_init.c", "/Users/xin/esp/v5.5.1/esp-idf/components/esp_hw_support/port/esp32c6/pmu_sleep.c", "/Users/xin/esp/v5.5.1/esp-idf/components/esp_hw_support/port/esp32c6/rtc_time.c", "/Users/xin/esp/v5.5.1/esp-idf/components/esp_hw_support/port/esp32c6/chip_info.c", "/Users/xin/esp/v5.5.1/esp-idf/components/esp_hw_support/port/esp32c6/ocode_init.c", "/Users/xin/esp/v5.5.1/esp-idf/components/esp_hw_support/port/esp32c6/sar_periph_ctrl.c", "/Users/xin/esp/v5.5.1/esp-idf/components/esp_hw_support/lowpower/port/esp32c6/sleep_cpu.c", "/Users/xin/esp/v5.5.1/esp-idf/components/esp_hw_support/lowpower/port/esp32c6/sleep_cpu_asm.S", "/Users/xin/esp/v5.5.1/esp-idf/components/esp_hw_support/lowpower/port/esp32c6/sleep_clock.c", "/Users/xin/esp/v5.5.1/esp-idf/components/esp_hw_support/lowpower/port/esp32c6/sleep_modem_state.c" ],
             "include_dirs": [ "include", "include/soc", "include/soc/esp32c6", "dma/include", "ldo/include", "debug_probe/include", "mspi_timing_tuning/include", "mspi_timing_tuning/tuning_scheme_impl/include", "power_supply/include" ]
         },
@@ -234,7 +234,7 @@
             "priv_reqs": [ "heap", "spi_flash" ],
             "managed_reqs": [],
             "managed_priv_reqs": [],
-            "file": "/Users/xin/UPC/SEU/lab1/build/esp-idf/esp_mm/libesp_mm.a",
+            "file": "/Users/xin/UPC/SEU/SEU/lab1/build/esp-idf/esp_mm/libesp_mm.a",
             "sources": [ "/Users/xin/esp/v5.5.1/esp-idf/components/esp_mm/esp_mmu_map.c", "/Users/xin/esp/v5.5.1/esp-idf/components/esp_mm/port/esp32c6/ext_mem_layout.c", "/Users/xin/esp/v5.5.1/esp-idf/components/esp_mm/esp_cache_msync.c", "/Users/xin/esp/v5.5.1/esp-idf/components/esp_mm/esp_cache_utils.c", "/Users/xin/esp/v5.5.1/esp-idf/components/esp_mm/heap_align_hw.c" ],
             "include_dirs": [ "include" ]
         },
@@ -249,7 +249,7 @@
             "priv_reqs": [ "esp_system", "spi_flash", "partition_table", "bootloader_support", "app_update" ],
             "managed_reqs": [],
             "managed_priv_reqs": [],
-            "file": "/Users/xin/UPC/SEU/lab1/build/esp-idf/esp_partition/libesp_partition.a",
+            "file": "/Users/xin/UPC/SEU/SEU/lab1/build/esp-idf/esp_partition/libesp_partition.a",
             "sources": [ "/Users/xin/esp/v5.5.1/esp-idf/components/esp_partition/partition.c", "/Users/xin/esp/v5.5.1/esp-idf/components/esp_partition/partition_target.c" ],
             "include_dirs": [ "include" ]
         },
@@ -264,7 +264,7 @@
             "priv_reqs": [ "esp_system", "esp_driver_gpio", "esp_timer" ],
             "managed_reqs": [],
             "managed_priv_reqs": [],
-            "file": "/Users/xin/UPC/SEU/lab1/build/esp-idf/esp_pm/libesp_pm.a",
+            "file": "/Users/xin/UPC/SEU/SEU/lab1/build/esp-idf/esp_pm/libesp_pm.a",
             "sources": [ "/Users/xin/esp/v5.5.1/esp-idf/components/esp_pm/pm_locks.c", "/Users/xin/esp/v5.5.1/esp-idf/components/esp_pm/pm_trace.c", "/Users/xin/esp/v5.5.1/esp-idf/components/esp_pm/pm_impl.c" ],
             "include_dirs": [ "include" ]
         },
@@ -279,7 +279,7 @@
             "priv_reqs": [ "soc", "hal" ],
             "managed_reqs": [],
             "managed_priv_reqs": [],
-            "file": "/Users/xin/UPC/SEU/lab1/build/esp-idf/esp_rom/libesp_rom.a",
+            "file": "/Users/xin/UPC/SEU/SEU/lab1/build/esp-idf/esp_rom/libesp_rom.a",
             "sources": [ "/Users/xin/esp/v5.5.1/esp-idf/components/esp_rom/patches/esp_rom_sys.c", "/Users/xin/esp/v5.5.1/esp-idf/components/esp_rom/patches/esp_rom_print.c", "/Users/xin/esp/v5.5.1/esp-idf/components/esp_rom/patches/esp_rom_crc.c", "/Users/xin/esp/v5.5.1/esp-idf/components/esp_rom/patches/esp_rom_uart.c", "/Users/xin/esp/v5.5.1/esp-idf/components/esp_rom/patches/esp_rom_spiflash.c", "/Users/xin/esp/v5.5.1/esp-idf/components/esp_rom/patches/esp_rom_efuse.c", "/Users/xin/esp/v5.5.1/esp-idf/components/esp_rom/patches/esp_rom_gpio.c", "/Users/xin/esp/v5.5.1/esp-idf/components/esp_rom/patches/esp_rom_hp_regi2c_esp32c6.c", "/Users/xin/esp/v5.5.1/esp-idf/components/esp_rom/patches/esp_rom_tlsf.c", "/Users/xin/esp/v5.5.1/esp-idf/components/esp_rom/patches/esp_rom_multi_heap.c", "/Users/xin/esp/v5.5.1/esp-idf/components/esp_rom/patches/esp_rom_systimer.c", "/Users/xin/esp/v5.5.1/esp-idf/components/esp_rom/patches/esp_rom_wdt.c", "/Users/xin/esp/v5.5.1/esp-idf/components/esp_rom/patches/esp_rom_usb_serial.c" ],
             "include_dirs": [ "include", "esp32c6/include", "esp32c6/include/esp32c6", "esp32c6" ]
         },
@@ -294,7 +294,7 @@
             "priv_reqs": [ "efuse", "esp_hw_support", "esp_system", "esp_timer" ],
             "managed_reqs": [],
             "managed_priv_reqs": [],
-            "file": "/Users/xin/UPC/SEU/lab1/build/esp-idf/esp_security/libesp_security.a",
+            "file": "/Users/xin/UPC/SEU/SEU/lab1/build/esp-idf/esp_security/libesp_security.a",
             "sources": [ "/Users/xin/esp/v5.5.1/esp-idf/components/esp_security/src/init.c", "/Users/xin/esp/v5.5.1/esp-idf/components/esp_security/src/esp_hmac.c", "/Users/xin/esp/v5.5.1/esp-idf/components/esp_security/src/esp_ds.c", "/Users/xin/esp/v5.5.1/esp-idf/components/esp_security/src/esp_dpa_protection.c", "/Users/xin/esp/v5.5.1/esp-idf/components/esp_security/src/esp_crypto_lock.c", "/Users/xin/esp/v5.5.1/esp-idf/components/esp_security/src/esp_crypto_periph_clk.c" ],
             "include_dirs": [ "include" ]
         },
@@ -309,7 +309,7 @@
             "priv_reqs": [ "spi_flash", "esp_timer", "esp_mm", "bootloader_support", "esp_pm" ],
             "managed_reqs": [],
             "managed_priv_reqs": [],
-            "file": "/Users/xin/UPC/SEU/lab1/build/esp-idf/esp_system/libesp_system.a",
+            "file": "/Users/xin/UPC/SEU/SEU/lab1/build/esp-idf/esp_system/libesp_system.a",
             "sources": [ "/Users/xin/esp/v5.5.1/esp-idf/components/esp_system/esp_err.c", "/Users/xin/esp/v5.5.1/esp-idf/components/esp_system/crosscore_int.c", "/Users/xin/esp/v5.5.1/esp-idf/components/esp_system/esp_ipc.c", "/Users/xin/esp/v5.5.1/esp-idf/components/esp_system/esp_system_console.c", "/Users/xin/esp/v5.5.1/esp-idf/components/esp_system/freertos_hooks.c", "/Users/xin/esp/v5.5.1/esp-idf/components/esp_system/int_wdt.c", "/Users/xin/esp/v5.5.1/esp-idf/components/esp_system/panic.c", "/Users/xin/esp/v5.5.1/esp-idf/components/esp_system/esp_system.c", "/Users/xin/esp/v5.5.1/esp-idf/components/esp_system/startup.c", "/Users/xin/esp/v5.5.1/esp-idf/components/esp_system/startup_funcs.c", "/Users/xin/esp/v5.5.1/esp-idf/components/esp_system/system_time.c", "/Users/xin/esp/v5.5.1/esp-idf/components/esp_system/stack_check.c", "/Users/xin/esp/v5.5.1/esp-idf/components/esp_system/ubsan.c", "/Users/xin/esp/v5.5.1/esp-idf/components/esp_system/xt_wdt.c", "/Users/xin/esp/v5.5.1/esp-idf/components/esp_system/task_wdt/task_wdt.c", "/Users/xin/esp/v5.5.1/esp-idf/components/esp_system/task_wdt/task_wdt_impl_timergroup.c", "/Users/xin/esp/v5.5.1/esp-idf/components/esp_system/systick_etm.c", "/Users/xin/esp/v5.5.1/esp-idf/components/esp_system/hw_stack_guard.c", "/Users/xin/esp/v5.5.1/esp-idf/components/esp_system/port/cpu_start.c", "/Users/xin/esp/v5.5.1/esp-idf/components/esp_system/port/panic_handler.c", "/Users/xin/esp/v5.5.1/esp-idf/components/esp_system/port/esp_system_chip.c", "/Users/xin/esp/v5.5.1/esp-idf/components/esp_system/port/image_process.c", "/Users/xin/esp/v5.5.1/esp-idf/components/esp_system/port/arch/riscv/expression_with_stack.c", "/Users/xin/esp/v5.5.1/esp-idf/components/esp_system/port/arch/riscv/panic_arch.c", "/Users/xin/esp/v5.5.1/esp-idf/components/esp_system/port/arch/riscv/debug_helpers.c", "/Users/xin/esp/v5.5.1/esp-idf/components/esp_system/port/arch/riscv/debug_stubs.c", "/Users/xin/esp/v5.5.1/esp-idf/components/esp_system/port/soc/esp32c6/clk.c", "/Users/xin/esp/v5.5.1/esp-idf/components/esp_system/port/soc/esp32c6/reset_reason.c", "/Users/xin/esp/v5.5.1/esp-idf/components/esp_system/port/soc/esp32c6/system_internal.c", "/Users/xin/esp/v5.5.1/esp-idf/components/esp_system/port/soc/esp32c6/cache_err_int.c" ],
             "include_dirs": [ "include" ]
         },
@@ -324,7 +324,7 @@
             "priv_reqs": [],
             "managed_reqs": [],
             "managed_priv_reqs": [],
-            "file": "/Users/xin/UPC/SEU/lab1/build/esp-idf/esp_timer/libesp_timer.a",
+            "file": "/Users/xin/UPC/SEU/SEU/lab1/build/esp-idf/esp_timer/libesp_timer.a",
             "sources": [ "/Users/xin/esp/v5.5.1/esp-idf/components/esp_timer/src/esp_timer.c", "/Users/xin/esp/v5.5.1/esp-idf/components/esp_timer/src/esp_timer_init.c", "/Users/xin/esp/v5.5.1/esp-idf/components/esp_timer/src/ets_timer_legacy.c", "/Users/xin/esp/v5.5.1/esp-idf/components/esp_timer/src/system_time.c", "/Users/xin/esp/v5.5.1/esp-idf/components/esp_timer/src/esp_timer_impl_common.c", "/Users/xin/esp/v5.5.1/esp-idf/components/esp_timer/src/esp_timer_impl_systimer.c", "/Users/xin/esp/v5.5.1/esp-idf/components/esp_timer/src/esp_timer_etm.c" ],
             "include_dirs": [ "include" ]
         },
@@ -332,15 +332,15 @@
             "alias": "idf::espressif__led_strip",
             "target": "___idf_espressif__led_strip",
             "prefix": "idf",
-            "dir": "/Users/xin/UPC/SEU/lab1/managed_components/espressif__led_strip",
+            "dir": "/Users/xin/UPC/SEU/SEU/lab1/managed_components/espressif__led_strip",
             "type": "LIBRARY",
             "lib": "__idf_espressif__led_strip",
             "reqs": [ "esp_driver_rmt", "esp_driver_spi" ],
             "priv_reqs": [],
             "managed_reqs": [],
             "managed_priv_reqs": [],
-            "file": "/Users/xin/UPC/SEU/lab1/build/esp-idf/espressif__led_strip/libespressif__led_strip.a",
-            "sources": [ "/Users/xin/UPC/SEU/lab1/managed_components/espressif__led_strip/src/led_strip_api.c", "/Users/xin/UPC/SEU/lab1/managed_components/espressif__led_strip/src/led_strip_rmt_dev.c", "/Users/xin/UPC/SEU/lab1/managed_components/espressif__led_strip/src/led_strip_rmt_encoder.c", "/Users/xin/UPC/SEU/lab1/managed_components/espressif__led_strip/src/led_strip_spi_dev.c" ],
+            "file": "/Users/xin/UPC/SEU/SEU/lab1/build/esp-idf/espressif__led_strip/libespressif__led_strip.a",
+            "sources": [ "/Users/xin/UPC/SEU/SEU/lab1/managed_components/espressif__led_strip/src/led_strip_api.c", "/Users/xin/UPC/SEU/SEU/lab1/managed_components/espressif__led_strip/src/led_strip_rmt_dev.c", "/Users/xin/UPC/SEU/SEU/lab1/managed_components/espressif__led_strip/src/led_strip_rmt_encoder.c", "/Users/xin/UPC/SEU/SEU/lab1/managed_components/espressif__led_strip/src/led_strip_spi_dev.c" ],
             "include_dirs": [ "include", "interface" ]
         },
         "esptool_py": {
@@ -369,7 +369,7 @@
             "priv_reqs": [],
             "managed_reqs": [],
             "managed_priv_reqs": [],
-            "file": "/Users/xin/UPC/SEU/lab1/build/esp-idf/freertos/libfreertos.a",
+            "file": "/Users/xin/UPC/SEU/SEU/lab1/build/esp-idf/freertos/libfreertos.a",
             "sources": [ "/Users/xin/esp/v5.5.1/esp-idf/components/freertos/heap_idf.c", "/Users/xin/esp/v5.5.1/esp-idf/components/freertos/app_startup.c", "/Users/xin/esp/v5.5.1/esp-idf/components/freertos/port_common.c", "/Users/xin/esp/v5.5.1/esp-idf/components/freertos/port_systick.c", "/Users/xin/esp/v5.5.1/esp-idf/components/freertos/FreeRTOS-Kernel/list.c", "/Users/xin/esp/v5.5.1/esp-idf/components/freertos/FreeRTOS-Kernel/queue.c", "/Users/xin/esp/v5.5.1/esp-idf/components/freertos/FreeRTOS-Kernel/tasks.c", "/Users/xin/esp/v5.5.1/esp-idf/components/freertos/FreeRTOS-Kernel/timers.c", "/Users/xin/esp/v5.5.1/esp-idf/components/freertos/FreeRTOS-Kernel/event_groups.c", "/Users/xin/esp/v5.5.1/esp-idf/components/freertos/FreeRTOS-Kernel/stream_buffer.c", "/Users/xin/esp/v5.5.1/esp-idf/components/freertos/FreeRTOS-Kernel/portable/riscv/port.c", "/Users/xin/esp/v5.5.1/esp-idf/components/freertos/FreeRTOS-Kernel/portable/riscv/portasm.S", "/Users/xin/esp/v5.5.1/esp-idf/components/freertos/esp_additions/freertos_compatibility.c", "/Users/xin/esp/v5.5.1/esp-idf/components/freertos/esp_additions/idf_additions_event_groups.c", "/Users/xin/esp/v5.5.1/esp-idf/components/freertos/esp_additions/idf_additions.c" ],
             "include_dirs": [ "config/include", "config/include/freertos", "config/riscv/include", "FreeRTOS-Kernel/include", "FreeRTOS-Kernel/portable/riscv/include", "FreeRTOS-Kernel/portable/riscv/include/freertos", "esp_additions/include" ]
         },
@@ -384,7 +384,7 @@
             "priv_reqs": [],
             "managed_reqs": [],
             "managed_priv_reqs": [],
-            "file": "/Users/xin/UPC/SEU/lab1/build/esp-idf/hal/libhal.a",
+            "file": "/Users/xin/UPC/SEU/SEU/lab1/build/esp-idf/hal/libhal.a",
             "sources": [ "/Users/xin/esp/v5.5.1/esp-idf/components/hal/hal_utils.c", "/Users/xin/esp/v5.5.1/esp-idf/components/hal/efuse_hal.c", "/Users/xin/esp/v5.5.1/esp-idf/components/hal/esp32c6/efuse_hal.c", "/Users/xin/esp/v5.5.1/esp-idf/components/hal/lp_timer_hal.c", "/Users/xin/esp/v5.5.1/esp-idf/components/hal/mmu_hal.c", "/Users/xin/esp/v5.5.1/esp-idf/components/hal/cache_hal.c", "/Users/xin/esp/v5.5.1/esp-idf/components/hal/color_hal.c", "/Users/xin/esp/v5.5.1/esp-idf/components/hal/spi_flash_hal.c", "/Users/xin/esp/v5.5.1/esp-idf/components/hal/spi_flash_hal_iram.c", "/Users/xin/esp/v5.5.1/esp-idf/components/hal/spi_flash_encrypt_hal_iram.c", "/Users/xin/esp/v5.5.1/esp-idf/components/hal/esp32c6/clk_tree_hal.c", "/Users/xin/esp/v5.5.1/esp-idf/components/hal/uart_hal.c", "/Users/xin/esp/v5.5.1/esp-idf/components/hal/uart_hal_iram.c", "/Users/xin/esp/v5.5.1/esp-idf/components/hal/gpio_hal.c", "/Users/xin/esp/v5.5.1/esp-idf/components/hal/rtc_io_hal.c", "/Users/xin/esp/v5.5.1/esp-idf/components/hal/timer_hal.c", "/Users/xin/esp/v5.5.1/esp-idf/components/hal/ledc_hal.c", "/Users/xin/esp/v5.5.1/esp-idf/components/hal/ledc_hal_iram.c", "/Users/xin/esp/v5.5.1/esp-idf/components/hal/i2c_hal.c", "/Users/xin/esp/v5.5.1/esp-idf/components/hal/i2c_hal_iram.c", "/Users/xin/esp/v5.5.1/esp-idf/components/hal/rmt_hal.c", "/Users/xin/esp/v5.5.1/esp-idf/components/hal/pcnt_hal.c", "/Users/xin/esp/v5.5.1/esp-idf/components/hal/mcpwm_hal.c", "/Users/xin/esp/v5.5.1/esp-idf/components/hal/uhci_hal.c", "/Users/xin/esp/v5.5.1/esp-idf/components/hal/twai_hal_sja1000.c", "/Users/xin/esp/v5.5.1/esp-idf/components/hal/gdma_hal_top.c", "/Users/xin/esp/v5.5.1/esp-idf/components/hal/gdma_hal_ahb_v1.c", "/Users/xin/esp/v5.5.1/esp-idf/components/hal/i2s_hal.c", "/Users/xin/esp/v5.5.1/esp-idf/components/hal/sdm_hal.c", "/Users/xin/esp/v5.5.1/esp-idf/components/hal/etm_hal.c", "/Users/xin/esp/v5.5.1/esp-idf/components/hal/parlio_hal.c", "/Users/xin/esp/v5.5.1/esp-idf/components/hal/adc_hal_common.c", "/Users/xin/esp/v5.5.1/esp-idf/components/hal/adc_oneshot_hal.c", "/Users/xin/esp/v5.5.1/esp-idf/components/hal/adc_hal.c", "/Users/xin/esp/v5.5.1/esp-idf/components/hal/ecc_hal.c", "/Users/xin/esp/v5.5.1/esp-idf/components/hal/mpi_hal.c", "/Users/xin/esp/v5.5.1/esp-idf/components/hal/sha_hal.c", "/Users/xin/esp/v5.5.1/esp-idf/components/hal/aes_hal.c", "/Users/xin/esp/v5.5.1/esp-idf/components/hal/esp32c6/modem_clock_hal.c", "/Users/xin/esp/v5.5.1/esp-idf/components/hal/esp32c6/pau_hal.c", "/Users/xin/esp/v5.5.1/esp-idf/components/hal/brownout_hal.c", "/Users/xin/esp/v5.5.1/esp-idf/components/hal/spi_hal.c", "/Users/xin/esp/v5.5.1/esp-idf/components/hal/spi_hal_iram.c", "/Users/xin/esp/v5.5.1/esp-idf/components/hal/spi_slave_hal.c", "/Users/xin/esp/v5.5.1/esp-idf/components/hal/spi_slave_hal_iram.c", "/Users/xin/esp/v5.5.1/esp-idf/components/hal/spi_slave_hd_hal.c", "/Users/xin/esp/v5.5.1/esp-idf/components/hal/spi_flash_hal_gpspi.c", "/Users/xin/esp/v5.5.1/esp-idf/components/hal/sdio_slave_hal.c", "/Users/xin/esp/v5.5.1/esp-idf/components/hal/esp32c6/pmu_hal.c", "/Users/xin/esp/v5.5.1/esp-idf/components/hal/apm_hal.c", "/Users/xin/esp/v5.5.1/esp-idf/components/hal/hmac_hal.c", "/Users/xin/esp/v5.5.1/esp-idf/components/hal/ds_hal.c", "/Users/xin/esp/v5.5.1/esp-idf/components/hal/usb_serial_jtag_hal.c" ],
             "include_dirs": [ "platform_port/include", "esp32c6/include", "include" ]
         },
@@ -399,7 +399,7 @@
             "priv_reqs": [ "soc" ],
             "managed_reqs": [],
             "managed_priv_reqs": [],
-            "file": "/Users/xin/UPC/SEU/lab1/build/esp-idf/heap/libheap.a",
+            "file": "/Users/xin/UPC/SEU/SEU/lab1/build/esp-idf/heap/libheap.a",
             "sources": [ "/Users/xin/esp/v5.5.1/esp-idf/components/heap/heap_caps_base.c", "/Users/xin/esp/v5.5.1/esp-idf/components/heap/heap_caps.c", "/Users/xin/esp/v5.5.1/esp-idf/components/heap/heap_caps_init.c", "/Users/xin/esp/v5.5.1/esp-idf/components/heap/multi_heap.c", "/Users/xin/esp/v5.5.1/esp-idf/components/heap/port/memory_layout_utils.c", "/Users/xin/esp/v5.5.1/esp-idf/components/heap/port/esp32c6/memory_layout.c" ],
             "include_dirs": [ "include", "tlsf" ]
         },
@@ -414,7 +414,7 @@
             "priv_reqs": [ "hal", "soc", "esp_hw_support" ],
             "managed_reqs": [],
             "managed_priv_reqs": [],
-            "file": "/Users/xin/UPC/SEU/lab1/build/esp-idf/log/liblog.a",
+            "file": "/Users/xin/UPC/SEU/SEU/lab1/build/esp-idf/log/liblog.a",
             "sources": [ "/Users/xin/esp/v5.5.1/esp-idf/components/log/src/os/log_timestamp.c", "/Users/xin/esp/v5.5.1/esp-idf/components/log/src/log_timestamp_common.c", "/Users/xin/esp/v5.5.1/esp-idf/components/log/src/os/log_lock.c", "/Users/xin/esp/v5.5.1/esp-idf/components/log/src/buffer/log_buffers.c", "/Users/xin/esp/v5.5.1/esp-idf/components/log/src/os/util.c", "/Users/xin/esp/v5.5.1/esp-idf/components/log/src/util.c", "/Users/xin/esp/v5.5.1/esp-idf/components/log/src/log_format_text.c", "/Users/xin/esp/v5.5.1/esp-idf/components/log/src/log_print.c", "/Users/xin/esp/v5.5.1/esp-idf/components/log/src/log.c", "/Users/xin/esp/v5.5.1/esp-idf/components/log/src/os/log_write.c", "/Users/xin/esp/v5.5.1/esp-idf/components/log/src/log_level/log_level.c", "/Users/xin/esp/v5.5.1/esp-idf/components/log/src/log_level/tag_log_level/tag_log_level.c", "/Users/xin/esp/v5.5.1/esp-idf/components/log/src/log_level/tag_log_level/linked_list/log_linked_list.c", "/Users/xin/esp/v5.5.1/esp-idf/components/log/src/log_level/tag_log_level/cache/log_binary_heap.c" ],
             "include_dirs": [ "include" ]
         },
@@ -422,15 +422,15 @@
             "alias": "idf::main",
             "target": "___idf_main",
             "prefix": "idf",
-            "dir": "/Users/xin/UPC/SEU/lab1/main",
+            "dir": "/Users/xin/UPC/SEU/SEU/lab1/main",
             "type": "LIBRARY",
             "lib": "__idf_main",
             "reqs": [],
             "priv_reqs": [ "espressif__led_strip" ],
             "managed_reqs": [],
             "managed_priv_reqs": [ "espressif__led_strip" ],
-            "file": "/Users/xin/UPC/SEU/lab1/build/esp-idf/main/libmain.a",
-            "sources": [ "/Users/xin/UPC/SEU/lab1/main/C.c" ],
+            "file": "/Users/xin/UPC/SEU/SEU/lab1/build/esp-idf/main/libmain.a",
+            "sources": [ "/Users/xin/UPC/SEU/SEU/lab1/main/C.c", "/Users/xin/UPC/SEU/SEU/lab1/main/B.c", "/Users/xin/UPC/SEU/SEU/lab1/main/A.c" ],
             "include_dirs": [ "." ]
         },
         "mbedtls": {
@@ -444,8 +444,8 @@
             "priv_reqs": [ "soc", "esp_hw_support", "esp_pm" ],
             "managed_reqs": [],
             "managed_priv_reqs": [],
-            "file": "/Users/xin/UPC/SEU/lab1/build/esp-idf/mbedtls/libmbedtls.a",
-            "sources": [ "/Users/xin/esp/v5.5.1/esp-idf/components/mbedtls/esp_crt_bundle/esp_crt_bundle.c", "/Users/xin/UPC/SEU/lab1/build/x509_crt_bundle.S" ],
+            "file": "/Users/xin/UPC/SEU/SEU/lab1/build/esp-idf/mbedtls/libmbedtls.a",
+            "sources": [ "/Users/xin/esp/v5.5.1/esp-idf/components/mbedtls/esp_crt_bundle/esp_crt_bundle.c", "/Users/xin/UPC/SEU/SEU/lab1/build/x509_crt_bundle.S" ],
             "include_dirs": [ "port/include", "mbedtls/include", "mbedtls/library", "esp_crt_bundle/include" ]
         },
         "newlib": {
@@ -459,7 +459,7 @@
             "priv_reqs": [ "soc", "spi_flash" ],
             "managed_reqs": [],
             "managed_priv_reqs": [],
-            "file": "/Users/xin/UPC/SEU/lab1/build/esp-idf/newlib/libnewlib.a",
+            "file": "/Users/xin/UPC/SEU/SEU/lab1/build/esp-idf/newlib/libnewlib.a",
             "sources": [ "/Users/xin/esp/v5.5.1/esp-idf/components/newlib/src/init.c", "/Users/xin/esp/v5.5.1/esp-idf/components/newlib/src/abort.c", "/Users/xin/esp/v5.5.1/esp-idf/components/newlib/src/assert.c", "/Users/xin/esp/v5.5.1/esp-idf/components/newlib/src/heap.c", "/Users/xin/esp/v5.5.1/esp-idf/components/newlib/src/locks.c", "/Users/xin/esp/v5.5.1/esp-idf/components/newlib/src/poll.c", "/Users/xin/esp/v5.5.1/esp-idf/components/newlib/src/pthread.c", "/Users/xin/esp/v5.5.1/esp-idf/components/newlib/src/random.c", "/Users/xin/esp/v5.5.1/esp-idf/components/newlib/src/getentropy.c", "/Users/xin/esp/v5.5.1/esp-idf/components/newlib/src/termios.c", "/Users/xin/esp/v5.5.1/esp-idf/components/newlib/src/stdatomic.c", "/Users/xin/esp/v5.5.1/esp-idf/components/newlib/src/time.c", "/Users/xin/esp/v5.5.1/esp-idf/components/newlib/src/sysconf.c", "/Users/xin/esp/v5.5.1/esp-idf/components/newlib/src/realpath.c", "/Users/xin/esp/v5.5.1/esp-idf/components/newlib/src/scandir.c", "/Users/xin/esp/v5.5.1/esp-idf/components/newlib/src/syscalls.c", "/Users/xin/esp/v5.5.1/esp-idf/components/newlib/src/reent_syscalls.c", "/Users/xin/esp/v5.5.1/esp-idf/components/newlib/src/port/esp_time_impl.c", "/Users/xin/esp/v5.5.1/esp-idf/components/newlib/src/flockfile.c", "/Users/xin/esp/v5.5.1/esp-idf/components/newlib/src/reent_init.c", "/Users/xin/esp/v5.5.1/esp-idf/components/newlib/src/newlib_init.c", "/Users/xin/esp/v5.5.1/esp-idf/components/newlib/src/port/esp_time_impl.c" ],
             "include_dirs": [ "platform_include" ]
         },
@@ -489,7 +489,7 @@
             "priv_reqs": [],
             "managed_reqs": [],
             "managed_priv_reqs": [],
-            "file": "/Users/xin/UPC/SEU/lab1/build/esp-idf/pthread/libpthread.a",
+            "file": "/Users/xin/UPC/SEU/SEU/lab1/build/esp-idf/pthread/libpthread.a",
             "sources": [ "/Users/xin/esp/v5.5.1/esp-idf/components/pthread/pthread.c", "/Users/xin/esp/v5.5.1/esp-idf/components/pthread/pthread_cond_var.c", "/Users/xin/esp/v5.5.1/esp-idf/components/pthread/pthread_local_storage.c", "/Users/xin/esp/v5.5.1/esp-idf/components/pthread/pthread_rwlock.c", "/Users/xin/esp/v5.5.1/esp-idf/components/pthread/pthread_semaphore.c" ],
             "include_dirs": [ "include" ]
         },
@@ -504,7 +504,7 @@
             "priv_reqs": [ "soc", "hal" ],
             "managed_reqs": [],
             "managed_priv_reqs": [],
-            "file": "/Users/xin/UPC/SEU/lab1/build/esp-idf/riscv/libriscv.a",
+            "file": "/Users/xin/UPC/SEU/SEU/lab1/build/esp-idf/riscv/libriscv.a",
             "sources": [ "/Users/xin/esp/v5.5.1/esp-idf/components/riscv/instruction_decode.c", "/Users/xin/esp/v5.5.1/esp-idf/components/riscv/interrupt.c", "/Users/xin/esp/v5.5.1/esp-idf/components/riscv/rv_utils.c", "/Users/xin/esp/v5.5.1/esp-idf/components/riscv/vectors.S", "/Users/xin/esp/v5.5.1/esp-idf/components/riscv/interrupt_plic.c", "/Users/xin/esp/v5.5.1/esp-idf/components/riscv/vectors_intc.S" ],
             "include_dirs": [ "include" ]
         },
@@ -519,7 +519,7 @@
             "priv_reqs": [],
             "managed_reqs": [],
             "managed_priv_reqs": [],
-            "file": "/Users/xin/UPC/SEU/lab1/build/esp-idf/soc/libsoc.a",
+            "file": "/Users/xin/UPC/SEU/SEU/lab1/build/esp-idf/soc/libsoc.a",
             "sources": [ "/Users/xin/esp/v5.5.1/esp-idf/components/soc/lldesc.c", "/Users/xin/esp/v5.5.1/esp-idf/components/soc/dport_access_common.c", "/Users/xin/esp/v5.5.1/esp-idf/components/soc/esp32c6/interrupts.c", "/Users/xin/esp/v5.5.1/esp-idf/components/soc/esp32c6/gpio_periph.c", "/Users/xin/esp/v5.5.1/esp-idf/components/soc/esp32c6/uart_periph.c", "/Users/xin/esp/v5.5.1/esp-idf/components/soc/esp32c6/adc_periph.c", "/Users/xin/esp/v5.5.1/esp-idf/components/soc/esp32c6/dedic_gpio_periph.c", "/Users/xin/esp/v5.5.1/esp-idf/components/soc/esp32c6/etm_periph.c", "/Users/xin/esp/v5.5.1/esp-idf/components/soc/esp32c6/gdma_periph.c", "/Users/xin/esp/v5.5.1/esp-idf/components/soc/esp32c6/spi_periph.c", "/Users/xin/esp/v5.5.1/esp-idf/components/soc/esp32c6/ledc_periph.c", "/Users/xin/esp/v5.5.1/esp-idf/components/soc/esp32c6/pcnt_periph.c", "/Users/xin/esp/v5.5.1/esp-idf/components/soc/esp32c6/rmt_periph.c", "/Users/xin/esp/v5.5.1/esp-idf/components/soc/esp32c6/sdm_periph.c", "/Users/xin/esp/v5.5.1/esp-idf/components/soc/esp32c6/i2s_periph.c", "/Users/xin/esp/v5.5.1/esp-idf/components/soc/esp32c6/i2c_periph.c", "/Users/xin/esp/v5.5.1/esp-idf/components/soc/esp32c6/temperature_sensor_periph.c", "/Users/xin/esp/v5.5.1/esp-idf/components/soc/esp32c6/timer_periph.c", "/Users/xin/esp/v5.5.1/esp-idf/components/soc/esp32c6/parlio_periph.c", "/Users/xin/esp/v5.5.1/esp-idf/components/soc/esp32c6/mcpwm_periph.c", "/Users/xin/esp/v5.5.1/esp-idf/components/soc/esp32c6/mpi_periph.c", "/Users/xin/esp/v5.5.1/esp-idf/components/soc/esp32c6/twai_periph.c", "/Users/xin/esp/v5.5.1/esp-idf/components/soc/esp32c6/wdt_periph.c", "/Users/xin/esp/v5.5.1/esp-idf/components/soc/esp32c6/ieee802154_periph.c", "/Users/xin/esp/v5.5.1/esp-idf/components/soc/esp32c6/rtc_io_periph.c", "/Users/xin/esp/v5.5.1/esp-idf/components/soc/esp32c6/sdio_slave_periph.c", "/Users/xin/esp/v5.5.1/esp-idf/components/soc/esp32c6/system_retention_periph.c", "/Users/xin/esp/v5.5.1/esp-idf/components/soc/esp32c6/power_supply_periph.c" ],
             "include_dirs": [ "include", "esp32c6", "esp32c6/include", "esp32c6/register" ]
         },
@@ -534,7 +534,7 @@
             "priv_reqs": [ "bootloader_support", "app_update", "soc", "esp_mm", "esp_driver_gpio" ],
             "managed_reqs": [],
             "managed_priv_reqs": [],
-            "file": "/Users/xin/UPC/SEU/lab1/build/esp-idf/spi_flash/libspi_flash.a",
+            "file": "/Users/xin/UPC/SEU/SEU/lab1/build/esp-idf/spi_flash/libspi_flash.a",
             "sources": [ "/Users/xin/esp/v5.5.1/esp-idf/components/spi_flash/flash_brownout_hook.c", "/Users/xin/esp/v5.5.1/esp-idf/components/spi_flash/spi_flash_chip_drivers.c", "/Users/xin/esp/v5.5.1/esp-idf/components/spi_flash/spi_flash_chip_generic.c", "/Users/xin/esp/v5.5.1/esp-idf/components/spi_flash/spi_flash_chip_issi.c", "/Users/xin/esp/v5.5.1/esp-idf/components/spi_flash/spi_flash_chip_mxic.c", "/Users/xin/esp/v5.5.1/esp-idf/components/spi_flash/spi_flash_chip_gd.c", "/Users/xin/esp/v5.5.1/esp-idf/components/spi_flash/spi_flash_chip_winbond.c", "/Users/xin/esp/v5.5.1/esp-idf/components/spi_flash/spi_flash_chip_boya.c", "/Users/xin/esp/v5.5.1/esp-idf/components/spi_flash/spi_flash_chip_mxic_opi.c", "/Users/xin/esp/v5.5.1/esp-idf/components/spi_flash/spi_flash_chip_th.c", "/Users/xin/esp/v5.5.1/esp-idf/components/spi_flash/memspi_host_driver.c", "/Users/xin/esp/v5.5.1/esp-idf/components/spi_flash/cache_utils.c", "/Users/xin/esp/v5.5.1/esp-idf/components/spi_flash/flash_mmap.c", "/Users/xin/esp/v5.5.1/esp-idf/components/spi_flash/flash_ops.c", "/Users/xin/esp/v5.5.1/esp-idf/components/spi_flash/spi_flash_wrap.c", "/Users/xin/esp/v5.5.1/esp-idf/components/spi_flash/esp_flash_api.c", "/Users/xin/esp/v5.5.1/esp-idf/components/spi_flash/esp_flash_spi_init.c", "/Users/xin/esp/v5.5.1/esp-idf/components/spi_flash/spi_flash_os_func_app.c", "/Users/xin/esp/v5.5.1/esp-idf/components/spi_flash/spi_flash_os_func_noos.c" ],
             "include_dirs": [ "include" ]
         }
@@ -622,7 +622,7 @@
             "priv_reqs": [ "esp_driver_uart", "esp_driver_usb_serial_jtag" ],
             "managed_reqs": [],
             "managed_priv_reqs": [],
-            "include_dirs": [ "/Users/xin/UPC/SEU/lab1/build" ]
+            "include_dirs": [ "/Users/xin/UPC/SEU/SEU/lab1/build" ]
         },
         "cxx": {
             "alias": "idf::cxx",
@@ -670,7 +670,7 @@
             "priv_reqs": [ "http_parser", "esp_timer", "lwip" ],
             "managed_reqs": [],
             "managed_priv_reqs": [],
-            "include_dirs": [ "/Users/xin/UPC/SEU/lab1/build", "esp-tls-crypto" ]
+            "include_dirs": [ "/Users/xin/UPC/SEU/SEU/lab1/build", "esp-tls-crypto" ]
         },
         "esp_adc": {
             "alias": "idf::esp_adc",
@@ -1840,7 +1840,7 @@
             "alias": "idf::main",
             "target": "___idf_main",
             "prefix": "idf",
-            "dir": "/Users/xin/UPC/SEU/lab1/main",
+            "dir": "/Users/xin/UPC/SEU/SEU/lab1/main",
             "lib": "__idf_main",
             "reqs": [],
             "priv_reqs": [ "espressif__led_strip" ],
@@ -1852,7 +1852,7 @@
             "alias": "idf::espressif__led_strip",
             "target": "___idf_espressif__led_strip",
             "prefix": "idf",
-            "dir": "/Users/xin/UPC/SEU/lab1/managed_components/espressif__led_strip",
+            "dir": "/Users/xin/UPC/SEU/SEU/lab1/managed_components/espressif__led_strip",
             "lib": "__idf_espressif__led_strip",
             "reqs": [ "esp_driver_rmt", "esp_driver_spi" ],
             "priv_reqs": [],
@@ -1863,10 +1863,10 @@
     },
     "debug_prefix_map_gdbinit": "",
     "gdbinit_files": {
-        "01_symbols": "/Users/xin/UPC/SEU/lab1/build/gdbinit/symbols",
-        "02_prefix_map": "/Users/xin/UPC/SEU/lab1/build/gdbinit/prefix_map",
-        "03_py_extensions": "/Users/xin/UPC/SEU/lab1/build/gdbinit/py_extensions",
-        "04_connect": "/Users/xin/UPC/SEU/lab1/build/gdbinit/connect"
+        "01_symbols": "/Users/xin/UPC/SEU/SEU/lab1/build/gdbinit/symbols",
+        "02_prefix_map": "/Users/xin/UPC/SEU/SEU/lab1/build/gdbinit/prefix_map",
+        "03_py_extensions": "/Users/xin/UPC/SEU/SEU/lab1/build/gdbinit/py_extensions",
+        "04_connect": "/Users/xin/UPC/SEU/SEU/lab1/build/gdbinit/connect"
     },
     "debug_arguments_openocd": "-f board/esp32c6-builtin.cfg"
 }

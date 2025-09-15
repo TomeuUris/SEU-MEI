@@ -3,4 +3,4 @@ source "/Users/xin/esp/v5.5.1/esp-idf/components/esp_app_format/Kconfig.projbuil
 source "/Users/xin/esp/v5.5.1/esp-idf/components/esp_rom/Kconfig.projbuild"
 source "/Users/xin/esp/v5.5.1/esp-idf/components/esptool_py/Kconfig.projbuild"
 source "/Users/xin/esp/v5.5.1/esp-idf/components/partition_table/Kconfig.projbuild"
-source "/Users/xin/UPC/SEU/lab1/main/Kconfig.projbuild"
+source "/Users/xin/UPC/SEU/SEU/lab1/main/Kconfig.projbuild"
