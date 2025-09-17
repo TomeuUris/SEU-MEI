@@ -22,15 +22,12 @@ static const char *TAG = "example";
 #define LED_GPIO CONFIG_BLINK_GPIO
 #define BUTTON_GPIO 0
 
+// Led state 0=powered off 1=powered on
 static uint8_t s_led_state = 0;
+// Last state of button press 0=Not pressed 1=Pressed
 static uint8_t s_button_last_state = 0;
 
-static void toggle_led(void)
-{
-    /* Set the GPIO level according to the state (LOW or HIGH)*/
-    gpio_set_level(LED_GPIO, s_led_state);
-}
-
+// Configure the GPIO pin elected for the led
 static void configure_led(void)
 {
     ESP_LOGI(TAG, "Example configured to toggle GPIO LED!");
@@ -39,14 +36,20 @@ static void configure_led(void)
     gpio_set_direction(LED_GPIO, GPIO_MODE_OUTPUT);
 }
 
-static void configure_button(void)
+// Configure the GPIO pin elected for the static void configure_button(void)
 {
     ESP_LOGI(TAG, "Example configured to use GPIO button!");
     gpio_reset_pin(BUTTON_GPIO);
     /* Set the GPIO as a input */
     gpio_set_direction(BUTTON_GPIO, GPIO_MODE_INPUT);
-    /* Set pull-up mode */
+    /* Set pull-up & puñ mode */
     gpio_set_pull_mode(BUTTON_GPIO, GPIO_PULLUP_PULLDOWN);
+}
+
+/* Set the GPIO level according to the state*/
+static void toggle_led(void)
+{
+    gpio_set_level(LED_GPIO, s_led_state);
 }
 
 static bool check_button_press(void)
@@ -69,7 +72,6 @@ static bool check_button_press(void)
 
 void app_main(void)
 {
-
     /* Configure the LED GPIO */
     configure_led();
 
@@ -83,7 +85,8 @@ void app_main(void)
             s_led_state = !s_led_state;
             ESP_LOGI(TAG, "Button pressed! LED state: %s", s_led_state ? "ON" : "OFF");
             toggle_led();
-
+            
+            // More delay as the user have to stop pressing the button and them wont be that fast
             vTaskDelay(50 / portTICK_PERIOD_MS);
         }
         vTaskDelay(10 / portTICK_PERIOD_MS);
