@@ -1,0 +1,17 @@
+# Build output
+build/
+
+# IDE/editor settings
+.vscode/
+.idea/
+
+# OS files
+.DS_Store
+
+# Python cache
+__pycache__/
+*.pyc
+
+# ESP-IDF specific
+sdkconfig
+sdkconfig.old
