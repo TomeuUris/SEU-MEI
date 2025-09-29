@@ -22,12 +22,48 @@ static int voltage;
 static bool example_adc_calibration_init(adc_unit_t unit, adc_channel_t channel, adc_atten_t atten, adc_cali_handle_t *out_handle);
 static void example_adc_calibration_deinit(adc_cali_handle_t handle);
 
+const int BPM_DELAY = 100;
+const int LOOP_DELAY = 10;
+#define BUFFER_SIZE 600
+float data_buffer[BUFFER_SIZE];
+int buffer_index = 0;
+bool buffer_full = false;
+
+void register_new_sample(float new_sample, bool *buffer_full)
+{
+    data_buffer[buffer_index % BUFFER_SIZE] = new_sample; // Store the new sample in the buffer
+    buffer_index++; // Move to the next index
+    if (buffer_index >= BUFFER_SIZE) {
+        *buffer_full = true;
+    }
+}
+
+//Calculate the peaks of the last 6 seconds of data
+//Returns the BPM value
+int calculate_bpm(void) {
+    int peak_count = 0;
+    int i;
+    // Simple peak detection: a peak is a point higher than its neighbors and above a threshold
+    float threshold = 2.5f; // Adjust this threshold as needed for your signal
+    for (i = 1; i < BUFFER_SIZE - 1; i++) {
+        float prev = data_buffer[(i - 1 + BUFFER_SIZE) % BUFFER_SIZE];
+        float curr = data_buffer[i];
+        float next = data_buffer[(i + 1) % BUFFER_SIZE];
+        if (curr > threshold && curr > prev && curr > next) {
+            peak_count++;
+        }
+    }
+    // 6 seconds of data, so BPM = (peaks / 6) * 60
+    int bpm = (peak_count * 10); // (peak_count / 6) * 60 = peak_count * 10
+    return bpm;
+}
+
 // -------------------------
 // Low-pass filter (pasa-bajos)
 // -------------------------
 float low_pass_filter(float input) {
     static float prev_output = 0;
-    float a = 0.67f;
+    float a = 0.2f;
     float output = a * input + (1 - a) * prev_output;
     prev_output = output;
     return output;
@@ -39,7 +75,7 @@ float low_pass_filter(float input) {
 float high_pass_filter(float input) {
     static float prev_input = 0;
     static float prev_output = 0;
-    float a = 0.76f;
+    float a = 0.98f;
     float output = a * ((input - prev_input) + prev_output);
     prev_input = input;
     prev_output = output;
@@ -82,16 +118,16 @@ void app_main(void)
     bool do_calibration = example_adc_calibration_init(ADC_UNIT_1, EXAMPLE_ADC1_CHAN0, EXAMPLE_ADC_ATTEN, &adc1_cali_handle);
 
     // Variables para detección de picos y BPM
-    float prev_filtered = 0.0f;
+    /*float prev_filtered = 0.0f;
     int peak_count = 0;
-    TickType_t start_time = xTaskGetTickCount();
 
     // Threshold
-    float threshold = 20.0f; 
+    float threshold = 20.0f; */
 
     while (1) {
+        TickType_t start_time = xTaskGetTickCount();
         ESP_ERROR_CHECK(adc_oneshot_read(adc1_handle, EXAMPLE_ADC1_CHAN0, &adc_raw));
-        ESP_LOGI(TAG, "ADC%d Channel%d Raw Data: %d", ADC_UNIT_1 + 1, EXAMPLE_ADC1_CHAN0, adc_raw);
+        //ESP_LOGI(TAG, "ADC%d Channel%d Raw Data: %d", ADC_UNIT_1 + 1, EXAMPLE_ADC1_CHAN0, adc_raw);
 
         if (do_calibration) {
             ESP_ERROR_CHECK(adc_cali_raw_to_voltage(adc1_cali_handle, adc_raw, &voltage));
@@ -103,24 +139,35 @@ void app_main(void)
         float signal_hp = high_pass_filter(voltage);   // Quita DC
         float signal_lp = low_pass_filter(signal_hp);  // Suaviza ruido
 
+        // Registrar nueva muestra
+        register_new_sample(signal_lp, &buffer_full);
+
+        if(buffer_full && buffer_index % BPM_DELAY == 0){
+            int bpm = calculate_bpm();
+            ESP_LOGI(TAG, "BPM estimado: %d", bpm);
+        }
+
         // Detección de picos
-        if (detect_peak(signal_lp, prev_filtered, threshold)) {
+        /*if (detect_peak(signal_lp, prev_filtered, threshold)) {
             peak_count++;
         }
-        prev_filtered = signal_lp;
+        
+        prev_filtered = signal_lp;*/
+
 
         // Calcular BPM cada 5 segundos
-        TickType_t current_time = xTaskGetTickCount();
+        /*TickType_t current_time = xTaskGetTickCount();
         float elapsed_sec = (current_time - start_time) / (float)configTICK_RATE_HZ;
         if (elapsed_sec >= 5.0f) {
             float bpm = (peak_count / elapsed_sec) * 60.0f;
             ESP_LOGI(TAG, "BPM estimado: %.1f", bpm);
             peak_count = 0;
             start_time = current_time;
-        }
-        ESP_LOGI(TAG, "Señal filtrada: %.2f mV", signal_lp);
+        }*/
+        // ESP_LOGI(TAG, "Señal filtrada: %.2f mV", signal_lp);
 
-        vTaskDelay(pdMS_TO_TICKS(100));
+        TickType_t delay = pdMS_TO_TICKS(LOOP_DELAY) - (xTaskGetTickCount() - start_time);
+        vTaskDelay(delay);
     }
 
     // Tear Down
