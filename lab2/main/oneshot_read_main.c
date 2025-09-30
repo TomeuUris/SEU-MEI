@@ -3,7 +3,6 @@
 #include <string.h>
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
-#include "soc/soc_caps.h"
 #include "esp_log.h"
 #include "esp_adc/adc_oneshot.h"
 #include "esp_adc/adc_cali.h"
@@ -11,56 +10,28 @@
 
 const static char *TAG = "HEART_RATE";
 
-/*---------------------------------------------------------------
-        ADC General Macros
----------------------------------------------------------------*/
+/* ADC Macros */
 #define EXAMPLE_ADC1_CHAN0          ADC_CHANNEL_0
 #define EXAMPLE_ADC_ATTEN           ADC_ATTEN_DB_12
 
+#define LOOP_DELAY 10              // ms
+#define MAX_IBI_SAMPLES 10         // Number of recent IBIs for averaging
+
+/* ADC Variables */
 static int adc_raw;
 static int voltage;
 static bool example_adc_calibration_init(adc_unit_t unit, adc_channel_t channel, adc_atten_t atten, adc_cali_handle_t *out_handle);
 static void example_adc_calibration_deinit(adc_cali_handle_t handle);
 
-const int BPM_DELAY = 100;
-const int LOOP_DELAY = 10;
-#define BUFFER_SIZE 600
-float data_buffer[BUFFER_SIZE];
-int buffer_index = 0;
-bool buffer_full = false;
+/* IBI Variables */
+TickType_t last_peak_tick = 0;
+float ibi_buffer[MAX_IBI_SAMPLES];
+int ibi_index = 0;
+bool ibi_ready = false;
 
-void register_new_sample(float new_sample, bool *buffer_full)
-{
-    data_buffer[buffer_index % BUFFER_SIZE] = new_sample; // Store the new sample in the buffer
-    buffer_index++; // Move to the next index
-    if (buffer_index >= BUFFER_SIZE) {
-        *buffer_full = true;
-    }
-}
-
-//Calculate the peaks of the last 6 seconds of data
-//Returns the BPM value
-int calculate_bpm(void) {
-    int peak_count = 0;
-    int i;
-    // Simple peak detection: a peak is a point higher than its neighbors and above a threshold
-    float threshold = 2.5f; // Adjust this threshold as needed for your signal
-    for (i = 1; i < BUFFER_SIZE - 1; i++) {
-        float prev = data_buffer[(i - 1 + BUFFER_SIZE) % BUFFER_SIZE];
-        float curr = data_buffer[i];
-        float next = data_buffer[(i + 1) % BUFFER_SIZE];
-        if (curr > threshold && curr > prev && curr > next) {
-            peak_count++;
-        }
-    }
-    // 6 seconds of data, so BPM = (peaks / 6) * 60
-    int bpm = (peak_count * 10); // (peak_count / 6) * 60 = peak_count * 10
-    return bpm;
-}
-
-// -------------------------
-// Low-pass filter (pasa-bajos)
-// -------------------------
+/*------------------------------------------
+    Filters
+------------------------------------------*/
 float low_pass_filter(float input) {
     static float prev_output = 0;
     float a = 0.2f;
@@ -69,9 +40,6 @@ float low_pass_filter(float input) {
     return output;
 }
 
-// -------------------------
-// High-pass filter (pasa-altos)
-// -------------------------
 float high_pass_filter(float input) {
     static float prev_input = 0;
     static float prev_output = 0;
@@ -82,135 +50,104 @@ float high_pass_filter(float input) {
     return output;
 }
 
-// -------------------------
-// Detect peaks for BPM calculation
-// -------------------------
+/*------------------------------------------
+    Peak Detection & IBI Processing
+------------------------------------------*/
 bool detect_peak(float current, float prev, float threshold) {
     static bool above_threshold = false;
-
     if (current > threshold && !above_threshold && current > prev) {
         above_threshold = true;
-        return true; // Pico detectado
+        return true;
     } else if (current < threshold) {
         above_threshold = false;
     }
     return false;
 }
 
-void app_main(void)
-{
-    //-------------ADC1 Init---------------//
+void process_peak(TickType_t current_tick) {
+    if (last_peak_tick != 0) {
+        TickType_t ibi_ticks = current_tick - last_peak_tick;
+        float ibi_sec = ibi_ticks / (float)configTICK_RATE_HZ;
+        ibi_buffer[ibi_index % MAX_IBI_SAMPLES] = ibi_sec;
+        ibi_index++;
+        if (ibi_index >= MAX_IBI_SAMPLES) ibi_ready = true;
+    }
+    last_peak_tick = current_tick;
+}
+
+float calculate_bpm_from_ibi() {
+    int count = ibi_ready ? MAX_IBI_SAMPLES : ibi_index;
+    if (count < 2) return 0; // Need at least 2 peaks
+    float sum = 0;
+    for (int i = 0; i < count; i++) sum += ibi_buffer[i];
+    float avg_ibi = sum / count;
+    return 60.0f / avg_ibi;
+}
+
+/*------------------------------------------
+    Main Application
+------------------------------------------*/
+void app_main(void) {
+    /* ADC Init */
     adc_oneshot_unit_handle_t adc1_handle;
-    adc_oneshot_unit_init_cfg_t init_config1 = {
-        .unit_id = ADC_UNIT_1,
-    };
+    adc_oneshot_unit_init_cfg_t init_config1 = { .unit_id = ADC_UNIT_1 };
     ESP_ERROR_CHECK(adc_oneshot_new_unit(&init_config1, &adc1_handle));
 
-    //-------------ADC1 Config---------------//
     adc_oneshot_chan_cfg_t config = {
         .atten = EXAMPLE_ADC_ATTEN,
         .bitwidth = ADC_BITWIDTH_DEFAULT,
     };
     ESP_ERROR_CHECK(adc_oneshot_config_channel(adc1_handle, EXAMPLE_ADC1_CHAN0, &config));
 
-    //-------------ADC1 Calibration Init---------------//
+    /* ADC Calibration */
     adc_cali_handle_t adc1_cali_handle = NULL;
     bool do_calibration = example_adc_calibration_init(ADC_UNIT_1, EXAMPLE_ADC1_CHAN0, EXAMPLE_ADC_ATTEN, &adc1_cali_handle);
 
-    // Variables para detección de picos y BPM
-    /*float prev_filtered = 0.0f;
-    int peak_count = 0;
-
-    // Threshold
-    float threshold = 20.0f; */
+    float prev_filtered = 0.0f;
+    float threshold = 2.5f;  // Adjust based on your sensor
 
     while (1) {
-        TickType_t start_time = xTaskGetTickCount();
-        ESP_ERROR_CHECK(adc_oneshot_read(adc1_handle, EXAMPLE_ADC1_CHAN0, &adc_raw));
-        //ESP_LOGI(TAG, "ADC%d Channel%d Raw Data: %d", ADC_UNIT_1 + 1, EXAMPLE_ADC1_CHAN0, adc_raw);
+        TickType_t start_tick = xTaskGetTickCount();
 
+        /* Read ADC */
+        ESP_ERROR_CHECK(adc_oneshot_read(adc1_handle, EXAMPLE_ADC1_CHAN0, &adc_raw));
         if (do_calibration) {
             ESP_ERROR_CHECK(adc_cali_raw_to_voltage(adc1_cali_handle, adc_raw, &voltage));
         } else {
-            voltage = adc_raw; // fallback
+            voltage = adc_raw;
         }
 
-        // Filtrado
-        float signal_hp = high_pass_filter(voltage);   // Quita DC
-        float signal_lp = low_pass_filter(signal_hp);  // Suaviza ruido
+        /* Filtering */
+        float signal_hp = high_pass_filter(voltage);
+        float signal_lp = low_pass_filter(signal_hp);
 
-        // Registrar nueva muestra
-        register_new_sample(signal_lp, &buffer_full);
-
-        if(buffer_full && buffer_index % BPM_DELAY == 0){
-            int bpm = calculate_bpm();
-            ESP_LOGI(TAG, "BPM estimado: %d", bpm);
+        /* Peak detection & IBI processing */
+        TickType_t current_tick = xTaskGetTickCount();
+        if (detect_peak(signal_lp, prev_filtered, threshold)) {
+            process_peak(current_tick);
         }
+        prev_filtered = signal_lp;
 
-        // Detección de picos
-        /*if (detect_peak(signal_lp, prev_filtered, threshold)) {
-            peak_count++;
-        }
-        
-        prev_filtered = signal_lp;*/
-
-
-        // Calcular BPM cada 5 segundos
-        /*TickType_t current_time = xTaskGetTickCount();
-        float elapsed_sec = (current_time - start_time) / (float)configTICK_RATE_HZ;
-        if (elapsed_sec >= 5.0f) {
-            float bpm = (peak_count / elapsed_sec) * 60.0f;
-            ESP_LOGI(TAG, "BPM estimado: %.1f", bpm);
-            peak_count = 0;
-            start_time = current_time;
-        }*/
         // ESP_LOGI(TAG, "Señal filtrada: %.2f mV", signal_lp);
 
-        TickType_t delay = pdMS_TO_TICKS(LOOP_DELAY) - (xTaskGetTickCount() - start_time);
-        vTaskDelay(delay);
+        /* Calculate BPM from IBI */
+        if (ibi_index % 2 == 0) { // Update every 2 detected peaks
+            float bpm = calculate_bpm_from_ibi();
+            if (bpm > 0) ESP_LOGI(TAG, "BPM estimado: %.1f", bpm);
+        }
+
+        /* Delay to maintain sampling rate */
+        TickType_t elapsed = xTaskGetTickCount() - start_tick;
+        if (elapsed < pdMS_TO_TICKS(LOOP_DELAY)) {
+            vTaskDelay(pdMS_TO_TICKS(LOOP_DELAY) - elapsed);
+        } else {
+            taskYIELD();
+        }
     }
 
-    // Tear Down
+    /* Tear down */
     ESP_ERROR_CHECK(adc_oneshot_del_unit(adc1_handle));
     if (do_calibration) {
         example_adc_calibration_deinit(adc1_cali_handle);
     }
-}
-
-/*---------------------------------------------------------------
-        ADC Calibration
----------------------------------------------------------------*/
-static bool example_adc_calibration_init(adc_unit_t unit, adc_channel_t channel, adc_atten_t atten, adc_cali_handle_t *out_handle)
-{
-    adc_cali_handle_t handle = NULL;
-    esp_err_t ret = ESP_FAIL;
-    bool calibrated = false;
-
-    adc_cali_curve_fitting_config_t cali_config = {
-        .unit_id = unit,
-        .chan = channel,
-        .atten = atten,
-    };
-    ret = adc_cali_create_scheme_curve_fitting(&cali_config, &handle);
-    if (ret == ESP_OK) {
-        calibrated = true;
-        *out_handle = handle;
-        ESP_LOGI(TAG, "ADC Calibration Success");
-    } else if (ret == ESP_ERR_NOT_SUPPORTED) {
-        ESP_LOGW(TAG, "eFuse not burnt, skip software calibration");
-    } else {
-        ESP_LOGE(TAG, "ADC Calibration failed");
-    }
-
-    return calibrated;
-}
-
-static void example_adc_calibration_deinit(adc_cali_handle_t handle)
-{
-#if ADC_CALI_SCHEME_CURVE_FITTING_SUPPORTED
-    if (handle) {
-        ESP_LOGI(TAG, "Deregistering Curve Fitting Calibration");
-        ESP_ERROR_CHECK(adc_cali_delete_scheme_curve_fitting(handle));
-    }
-#endif
 }
