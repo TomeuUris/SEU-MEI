@@ -34,9 +34,9 @@ typedef struct {
 // Coordinates for the square's vertices (0-255 for 8-bit resolution)
 point_t square[N_VERTICES] = {
     {50, 50},    // Bottom-left
-    {200, 50},   // Bottom-right
-    {200, 200},  // Top-right
-    {50, 200}    // Top-left
+    {150, 50},   // Bottom-right
+    {150, 150},  // Top-right
+    {50, 150}    // Top-left
 };
 
 
