@@ -20,8 +20,8 @@
 // !! IMPORTANTE: AJUSTA ESTOS PINES !!
 // Consulta el pinout de tu placa ESP32-C6 y el datasheet del transceptor [cite: 79]
 // para saber qué pines GPIO has conectado a D(TXD) y R(RXD) del transceptor TTL-CAN.
-#define TX_GPIO_NUM     CONFIG_EXAMPLE_TX_GPIO_NUM  // Sustituye por tu pin de TX (ej: 5)
-#define RX_GPIO_NUM     CONFIG_EXAMPLE_RX_GPIO_NUM  // Sustituye por tu pin de RX (ej: 4)
+#define TX_GPIO_NUM     5
+#define RX_GPIO_NUM     4
 
 static const char *TAG = "TWAI_ECHO_TEST";
 
