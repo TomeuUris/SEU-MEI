@@ -49,8 +49,16 @@ static void twai_echo_task(void *arg)
 
             // Imprimir datos si no es una trama RTR (Remote Transmission Request)
             if (!rx_message.rtr) {
-                printf("  Datos: ");
+                printf("  Datos recibidos: ");
                 for (int i = 0; i < rx_message.data_length_code; i++) {
+                    printf("0x%02X ", rx_message.data[i]);
+                }
+                printf("\n");
+
+                // Modificar el mensaje: incrementar cada byte de datos en 1
+                printf("  Datos modificados: ");
+                for (int i = 0; i < rx_message.data_length_code; i++) {
+                    rx_message.data[i] += 1;
                     printf("0x%02X ", rx_message.data[i]);
                 }
                 printf("\n");
