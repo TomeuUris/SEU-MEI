@@ -7,29 +7,42 @@ import tty
 import termios
 import threading
 
+# --- Configuració del Protocol CAN (Basada en el codi C de l'ESP32) ---
+# Identificadors esperats per l'ESP32 per als missatges de comanda
+PC1_CAN_ID = 0x101  # ID de Comanda del Gat (Cat)
+PC2_CAN_ID = 0x102  # ID de Comanda de la Rata (Mouse)
+CATCH_MSG_ID = 0x200  # ID per al missatge de "Joc Terminat" enviat per l'ESP32
+
+# Codi de dades esperat per l'ESP32 (data[0])
+CMD_UP = 0
+CMD_DOWN = 1
+CMD_LEFT = 2
+CMD_RIGHT = 3
+# --------------------------------------------------------------------
+
 # Check system name
 print(f"Operating System: {os.name}")
 
 # Select Player (Cat or Mouse)
-print("\n=== JOC DEL GAT I LA RATA ===")
+print("\n=== JOC DEL GAT I LA RATA (CAN Protocol v1.0) ===")
 print("Tria el teu jugador:")
-print("1 - Gat (Cat) - Jugador 1")
-print("2 - Rata (Mouse) - Jugador 2")
+print(f"1 - Gat (Cat) - ID de Comanda: 0x{PC1_CAN_ID:03X}")
+print(f"2 - Rata (Mouse) - ID de Comanda: 0x{PC2_CAN_ID:03X}")
 
 while True:
     choice = input("Escull (1 o 2): ").strip()
     if choice == '1':
         player = "Cat"
-        base_id = 0x100
+        command_id = PC1_CAN_ID # 0x101
         break
     elif choice == '2':
         player = "Mouse"
-        base_id = 0x200
+        command_id = PC2_CAN_ID # 0x102
         break
     else:
         print("Opció invàlida. Tria 1 o 2.")
 
-print(f"\n✓ Has escollit: {player} (Base ID: 0x{base_id:03X})")
+print(f"\n✓ Has escollit: {player} (Comanda ID: 0x{command_id:03X})")
 
 # For macOS with Innomaker USB2CAN adapter
 print("\nLooking for USB2CAN adapter...")
@@ -52,15 +65,16 @@ except Exception as e:
     print("4. If the problem persists, try: sudo python3 send.py")
     sys.exit(1)
 
-# Message definitions for WASD commands with selected player base ID
+# Message definitions mapping keyboard keys to the single command ID and data code
 messages = {
-    'w': can.Message(arbitration_id=base_id + 0, data=[0x57, 0, 0, 0, 0, 0, 0, 0], is_extended_id=False),  # W - Up
-    'a': can.Message(arbitration_id=base_id + 1, data=[0x41, 0, 0, 0, 0, 0, 0, 0], is_extended_id=False),  # A - Left
-    's': can.Message(arbitration_id=base_id + 2, data=[0x53, 0, 0, 0, 0, 0, 0, 0], is_extended_id=False),  # S - Down
-    'd': can.Message(arbitration_id=base_id + 3, data=[0x44, 0, 0, 0, 0, 0, 0, 0], is_extended_id=False),  # D - Right
+    # Tots utilitzen el mateix command_id (0x101 o 0x102). La comanda es diferencia per data[0].
+    'w': can.Message(arbitration_id=command_id, data=[CMD_UP, 0, 0, 0, 0, 0, 0, 0], is_extended_id=False),    # W -> 0 (UP)
+    'a': can.Message(arbitration_id=command_id, data=[CMD_LEFT, 0, 0, 0, 0, 0, 0, 0], is_extended_id=False),  # A -> 2 (LEFT)
+    's': can.Message(arbitration_id=command_id, data=[CMD_DOWN, 0, 0, 0, 0, 0, 0, 0], is_extended_id=False),  # S -> 1 (DOWN)
+    'd': can.Message(arbitration_id=command_id, data=[CMD_RIGHT, 0, 0, 0, 0, 0, 0, 0], is_extended_id=False), # D -> 3 (RIGHT)
 }
 
-# Flag to control the receiver thread
+# Flag to control the receiver thread and game state
 running = True
 
 def receive_messages():
@@ -70,9 +84,20 @@ def receive_messages():
     
     while running:
         try:
+            # Check for messages with a short timeout
             msg = can1.recv(timeout=0.5)
             
             if msg is not None:
+                
+                # Check for Game Over message from ESP32 (ID 0x200, Data 0x01)
+                if msg.arbitration_id == CATCH_MSG_ID and len(msg.data) >= 1 and msg.data[0] == 0x01:
+                    print("\r\n=======================================================")
+                    print("!!! JOC TERMINAT: GAT ATRAPA RATÓ !!!")
+                    print("=======================================================\n")
+                    running = False # Stop the main loop
+                    break # Exit the receiver loop
+                
+                # Print generic received message
                 data_hex = ' '.join([f'{b:02X}' for b in msg.data])
                 timestamp = time.strftime('%H:%M:%S')
                 print(f"\r[{timestamp}] ← CAN RX - ID: 0x{msg.arbitration_id:03X}, Data: [{data_hex}]")
@@ -86,6 +111,7 @@ def receive_messages():
 
 def get_key():
     """Get a single keypress without requiring Enter"""
+    # This setup is necessary for non-blocking single-key input on Unix-like systems
     fd = sys.stdin.fileno()
     old_settings = termios.tcgetattr(fd)
     try:
@@ -99,13 +125,13 @@ def get_key():
 
 print("\n=== CAN Bus Game Controller ===")
 print(f"Player: {player}")
-print(f"CAN IDs: 0x{base_id:03X}-0x{base_id+3:03X}")
+print(f"Command ID: 0x{command_id:03X}")
 print("Bitrate: 500 kbps")
 print("\nControls:")
-print("  W - Move Up")
-print("  A - Move Left")
-print("  S - Move Down")
-print("  D - Move Right")
+print("  W (Data: 0) - Move Up")
+print("  A (Data: 2) - Move Left")
+print("  S (Data: 1) - Move Down")
+print("  D (Data: 3) - Move Right")
 print("  Q - Quit\n")
 
 # Start the receiver thread
@@ -115,10 +141,8 @@ time.sleep(0.5)
 
 print(f"[{player}] Press W/A/S/D to move, Q to quit: ", end='', flush=True)
 
-print(f"[{player}] Press W/A/S/D to move, Q to quit: ", end='', flush=True)
-
 try:
-    while True:
+    while running:
         key = get_key()
         
         if key:
@@ -134,7 +158,14 @@ try:
                 can1.send(msg)
                 timestamp = time.strftime('%H:%M:%S')
                 data_hex = ' '.join([f'{b:02X}' for b in msg.data])
-                direction = {'w': 'UP', 'a': 'LEFT', 's': 'DOWN', 'd': 'RIGHT'}[key_lower]
+                
+                # Determine direction string for printing
+                if msg.data[0] == CMD_UP: direction = 'UP'
+                elif msg.data[0] == CMD_LEFT: direction = 'LEFT'
+                elif msg.data[0] == CMD_DOWN: direction = 'DOWN'
+                elif msg.data[0] == CMD_RIGHT: direction = 'RIGHT'
+                else: direction = 'UNKNOWN'
+
                 print(f"\r[{timestamp}] → [{player}] {direction} - ID: 0x{msg.arbitration_id:03X}, Data: [{data_hex}]")
                 print(f"[{player}] Press W/A/S/D to move, Q to quit: ", end='', flush=True)
         
@@ -144,8 +175,14 @@ except KeyboardInterrupt:
     print("\n\nInterrupted by user")
     running = False
 finally:
+    # Ensure all threads and resources are closed cleanly
     running = False
-    receiver_thread.join(timeout=1.0)
-    can1.shutdown()
-    print("CAN interface closed")
+    if receiver_thread.is_alive():
+        receiver_thread.join(timeout=1.0)
+    
+    # Check if can1 exists and is not None before calling shutdown
+    if 'can1' in locals() and can1 is not None:
+        can1.shutdown()
+        print("CAN interface closed")
+        
     print(f"\nGame Over! Thanks for playing as {player}!")
