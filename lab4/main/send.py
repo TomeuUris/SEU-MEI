@@ -7,13 +7,13 @@ import tty
 import termios
 import threading
 
-# --- Configuració del Protocol CAN (Basada en el codi C de l'ESP32) ---
-# Identificadors esperats per l'ESP32 per als missatges de comanda
-PC1_CAN_ID = 0x101  # ID de Comanda del Gat (Cat)
-PC2_CAN_ID = 0x102  # ID de Comanda de la Rata (Mouse)
-CATCH_MSG_ID = 0x200  # ID per al missatge de "Joc Terminat" enviat per l'ESP32
+# --- CAN Protocol Configuration (Based on ESP32 C code) ---
+# Expected identifiers for ESP32 command messages
+PC1_CAN_ID = 0x101  # Cat Command ID
+PC2_CAN_ID = 0x102  # Mouse Command ID
+CATCH_MSG_ID = 0x200  # "Game Over" message ID sent by ESP32
 
-# Codi de dades esperat per l'ESP32 (data[0])
+# Data code expected by ESP32 (data[0])
 CMD_UP = 0
 CMD_DOWN = 1
 CMD_LEFT = 2
@@ -24,13 +24,13 @@ CMD_RIGHT = 3
 print(f"Operating System: {os.name}")
 
 # Select Player (Cat or Mouse)
-print("\n=== JOC DEL GAT I LA RATA (CAN Protocol v1.0) ===")
-print("Tria el teu jugador:")
-print(f"1 - Gat (Cat) - ID de Comanda: 0x{PC1_CAN_ID:03X}")
-print(f"2 - Rata (Mouse) - ID de Comanda: 0x{PC2_CAN_ID:03X}")
+print("\n=== CAT AND MOUSE GAME (CAN Protocol v1.0) ===")
+print("Choose your player:")
+print(f"1 - Cat - Command ID: 0x{PC1_CAN_ID:03X}")
+print(f"2 - Mouse - Command ID: 0x{PC2_CAN_ID:03X}")
 
 while True:
-    choice = input("Escull (1 o 2): ").strip()
+    choice = input("Choose (1 or 2): ").strip()
     if choice == '1':
         player = "Cat"
         command_id = PC1_CAN_ID # 0x101
@@ -40,9 +40,9 @@ while True:
         command_id = PC2_CAN_ID # 0x102
         break
     else:
-        print("Opció invàlida. Tria 1 o 2.")
+        print("Invalid option. Choose 1 or 2.")
 
-print(f"\n✓ Has escollit: {player} (Comanda ID: 0x{command_id:03X})")
+print(f"\n✓ You chose: {player} (Command ID: 0x{command_id:03X})")
 
 # For macOS with Innomaker USB2CAN adapter
 print("\nLooking for USB2CAN adapter...")
@@ -67,7 +67,7 @@ except Exception as e:
 
 # Message definitions mapping keyboard keys to the single command ID and data code
 messages = {
-    # Tots utilitzen el mateix command_id (0x101 o 0x102). La comanda es diferencia per data[0].
+    # All use the same command_id (0x101 or 0x102). Commands are differentiated by data[0].
     'w': can.Message(arbitration_id=command_id, data=[CMD_UP, 0, 0, 0, 0, 0, 0, 0], is_extended_id=False),    # W -> 0 (UP)
     'a': can.Message(arbitration_id=command_id, data=[CMD_LEFT, 0, 0, 0, 0, 0, 0, 0], is_extended_id=False),  # A -> 2 (LEFT)
     's': can.Message(arbitration_id=command_id, data=[CMD_DOWN, 0, 0, 0, 0, 0, 0, 0], is_extended_id=False),  # S -> 1 (DOWN)
@@ -92,7 +92,7 @@ def receive_messages():
                 # Check for Game Over message from ESP32 (ID 0x200, Data 0x01)
                 if msg.arbitration_id == CATCH_MSG_ID and len(msg.data) >= 1 and msg.data[0] == 0x01:
                     print("\r\n=======================================================")
-                    print("!!! JOC TERMINAT: GAT ATRAPA RATÓ !!!")
+                    print("!!! GAME OVER: CAT CATCHES MOUSE !!!")
                     print("=======================================================\n")
                     running = False # Stop the main loop
                     break # Exit the receiver loop
@@ -166,7 +166,7 @@ try:
                 elif msg.data[0] == CMD_RIGHT: direction = 'RIGHT'
                 else: direction = 'UNKNOWN'
 
-                print(f"\r[{timestamp}] → [{player}] {direction} - ID: 0x{msg.arbitration_id:03X}, Data: [{data_hex}]")
+                print(f"\r[{timestamp}] → [{player}] {direction}")
                 print(f"[{player}] Press W/A/S/D to move, Q to quit: ", end='', flush=True)
         
         time.sleep(0.01)

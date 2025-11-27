@@ -1,3 +1,3 @@
-idf_component_register(SRCS "test_game.c"
+idf_component_register(SRCS "can_gato_raton.c"
                     REQUIRES driver
                     INCLUDE_DIRS ".")
