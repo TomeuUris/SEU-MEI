@@ -51,42 +51,55 @@ void led_blink_task_1(void *pvParameters) {
 
 SemaphoreHandle_t shared_mutex;
 
-void led_alternate_task_2_3_mutex(void *pvParameters) {
-    led_init(LED2_GPIO); // Inicializar LED2 y LED3
-    led_init(LED3_GPIO);
-    
+// Tarea 2: Enciende LED2 y apaga LED3 (Ciclo 1)
+void led_control_task_2_mutex(void *pvParameters) {
+    led_init(LED2_GPIO); 
     while (1) {
-        // 1. Intentar adquirir el mutex
+        // 1. Intentar adquirir el Mutex
         if (xSemaphoreTake(shared_mutex, portMAX_DELAY) == pdPASS) {
             
-            // Sección Crítica: Alternancia de 1 segundo (1000 ms)
-            // Asegura que LED2 y LED3 no se manipulen simultáneamente
-            
-            printf("[Mutex] LED2 ON / LED3 OFF\n");
+            // SECCIÓN CRÍTICA: Ciclo 1 (1 segundo)
+            printf("[Mutex-T2] LED2 ON / LED3 OFF\n");
             led_set_level(LED2_GPIO, 1);
             led_set_level(LED3_GPIO, 0);
-            vTaskDelay(pdMS_TO_TICKS(1000));
-
-            printf("[Mutex] LED2 OFF / LED3 ON\n");
-            led_set_level(LED2_GPIO, 0);
-            led_set_level(LED3_GPIO, 1);
-            vTaskDelay(pdMS_TO_TICKS(1000));
+            vTaskDelay(pdMS_TO_TICKS(1000)); 
             
-            // 2. Liberar el mutex
+            // 2. Liberar el Mutex
             xSemaphoreGive(shared_mutex);
         }
+        vTaskDelay(pdMS_TO_TICKS(50)); // Espera corta fuera de la sección crítica
+    }
+}
+
+// Tarea 3: Enciende LED3 y apaga LED2 (Ciclo 2)
+void led_control_task_3_mutex(void *pvParameters) {
+    led_init(LED3_GPIO);
+    while (1) {
+        // 1. Intentar adquirir el Mutex
+        if (xSemaphoreTake(shared_mutex, portMAX_DELAY) == pdPASS) {
+            
+            // SECCIÓN CRÍTICA: Ciclo 2 (1 segundo)
+            printf("[Mutex-T3] LED2 OFF / LED3 ON\n");
+            led_set_level(LED2_GPIO, 0);
+            led_set_level(LED3_GPIO, 1);
+            vTaskDelay(pdMS_TO_TICKS(1000)); 
+            
+            // 2. Liberar el Mutex
+            xSemaphoreGive(shared_mutex);
+        }
+        vTaskDelay(pdMS_TO_TICKS(50)); // Espera corta fuera de la sección crítica
     }
 }
 
 void app_main() {
+    xTaskCreate(led_blink_task_1, "LED1_Blink", 2048, NULL, 5, NULL);
+    
     // Crear el Mutex (soporta Priority Inheritance)
     shared_mutex = xSemaphoreCreateMutex();
     
     if (shared_mutex != NULL) {
-        // Tarea 1: Intermitencia (Independiente)
-        xTaskCreate(led_blink_task_1, "LED1_Blink", 2048, NULL, 5, NULL);
-        
-        // Tarea 2/3: Alternancia (Protegida por Mutex)
-        xTaskCreate(led_alternate_task_2_3_mutex, "LED23_Alternate", 2048, NULL, 5, NULL);
+        // Tareas 2 y 3 compiten por el Mutex
+        xTaskCreate(led_control_task_2_mutex, "LED_Control_2", 2048, NULL, 5, NULL);
+        xTaskCreate(led_control_task_3_mutex, "LED_Control_3", 2048, NULL, 5, NULL);
     }
 }
