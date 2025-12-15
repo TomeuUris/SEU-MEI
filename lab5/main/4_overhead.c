@@ -2,133 +2,192 @@
 #include "freertos/task.h"
 #include "freertos/semphr.h"
 #include "driver/gpio.h"
-#include "esp_timer.h" // NECESARIO para esp_timer_get_time()
 #include <stdio.h>
+#include "esp_cpu.h"
 
-// Define CONFIG_FREERTOS_HZ if not defined
-#ifndef CONFIG_FREERTOS_HZ
-#define CONFIG_FREERTOS_HZ 1000
-#endif
+// --- Configuració de la CPU i Mesura ---
+#define CPU_FREQ_MHZ 160
+#define NUM_MEASUREMENTS_TOTAL 1000 // Total de mesures a fer abans d'aturar-se
+#define REPORT_FREQUENCY 3         // Freqüència d'impressió: mostrar la mitjana cada 10 mesures
 
-// Definiciones de GPIO/LEDs (Tarea 2)
+#define GET_CYCLE_COUNT() esp_cpu_get_cycle_count()
+
+// --- Definició de GPIO/LEDs ---
 #define LED1_GPIO 1
 #define LED2_GPIO 2
 #define LED3_GPIO 3
 
-// Variables de sincronización (Tarea 2)
+// --- Variables Globals ---
 SemaphoreHandle_t shared_mutex;
 
-// --- Variables para la medición del Overhead (Tarea 4) ---
-static int64_t task_switch_out_time = 0;
-static int64_t task_switch_in_time = 0;
+// Variables per la mesura d'Overhead del Mutex
+static volatile uint32_t T_start_give = 0;
+static volatile uint64_t Total_Mutex_Overhead_Cycles = 0;
+static volatile uint32_t Measurements_Total = 0; // Comptador total global
+static volatile bool measurement_done = false;
+
+// Variables per al càlcul de la mitjana intermèdia
+static uint64_t report_cycle_sum = 0;
+static uint32_t report_count = 0;
+
 // --------------------------------------------------------
 
-// --- FUNCIONES DE HARDWARE (TAREA 2) ---
-
+// --- FUNCIONS DE HARDWARE ---
 void led_init(int gpio) {
     gpio_config_t io_conf = {
-        .intr_type = GPIO_INTR_DISABLE,
-        .mode = GPIO_MODE_OUTPUT,
-        .pin_bit_mask = (1ULL << gpio),
-        .pull_down_en = 0,
-        .pull_up_en = 0,
+        .intr_type = GPIO_INTR_DISABLE, .mode = GPIO_MODE_OUTPUT,
+        .pin_bit_mask = (1ULL << gpio), .pull_down_en = 0, .pull_up_en = 0,
     };
     gpio_config(&io_conf);
     gpio_set_level(gpio, 0); 
-    // printf("LED GPIO %d initialized\n", gpio); // Se comenta para reducir ruido
 }
 
 void led_set_level(int gpio, int level) {
     gpio_set_level(gpio, level);
-    // printf("LED GPIO %d set to level %d\n", gpio, level); // Se comenta para reducir ruido
 }
 
-// --- TAREAS DE LED (TAREA 2) ---
+// --------------------------------------------------------
 
+// --- TASCA 1: LED Independent ---
 void led_blink_task_1(void *pvParameters) {
     led_init(LED1_GPIO); 
     while (1) {
-        // vTaskDelay() provoca un cambio de contexto (y mide T_inicio)
-        led_set_level(LED1_GPIO, 1); // ON
+        led_set_level(LED1_GPIO, 1);
         vTaskDelay(pdMS_TO_TICKS(300));
-        
-        // vTaskDelay() provoca un cambio de contexto (y mide T_inicio)
-        led_set_level(LED1_GPIO, 0); // OFF
+        led_set_level(LED1_GPIO, 0);
         vTaskDelay(pdMS_TO_TICKS(300));
     }
 }
 
-void led_alternate_task_2_3_mutex(void *pvParameters) {
+// --------------------------------------------------------
+
+// --- TASQUES 2 & 3: Alternança amb Exclusió Mútua i Mesura d'Overhead ---
+
+void LED2_Control_Task(void *pvParameters) {
+    printf("Configurant LED2 (Control)...\n");
     led_init(LED2_GPIO); 
-    led_init(LED3_GPIO);
+    uint32_t T_end_take;
+    uint32_t current_overhead;
     
-    while (1) {
-        // xSemaphoreTake() puede causar bloqueo/cambio de contexto (mide T_inicio)
+    // Tasca per a LED2, també encarregada de calcular i imprimir la mitjana.
+    while (!measurement_done) {
+        
         if (xSemaphoreTake(shared_mutex, portMAX_DELAY) == pdPASS) {
             
-            printf("[Mutex] LED2 ON / LED3 OFF\n");
+            // 1. Punt de Mesura (Final del Context Switch)
+            T_end_take = GET_CYCLE_COUNT();
+            
+            // 2. Càlcul de l'Overhead (Give -> Context Switch -> Take)
+            if (T_start_give != 0 && T_end_take > T_start_give) {
+                current_overhead = T_end_take - T_start_give;
+                
+                // Comptadors globals per la mitjana total
+                Total_Mutex_Overhead_Cycles += current_overhead;
+                Measurements_Total++;
+
+                // Comptadors pel report intermig
+                report_cycle_sum += current_overhead;
+                report_count++;
+
+                // --- CÀLCUL I IMPRESSIÓ CONTINUA (cada REPORT_FREQUENCY) ---
+                if (report_count >= REPORT_FREQUENCY) {
+                    float avg_cycles = (float)report_cycle_sum / (float)report_count;
+                    float overhead_us = avg_cycles / CPU_FREQ_MHZ; 
+                    
+                    printf("\n[Mesura %lu-%lu] Overhead Mitjà: %.2f cicles (%.3f us)\n", 
+                           (unsigned3  long)(Measurements_Total - report_count + 1),
+                           (unsigned3  long)Measurements_Total,
+                           avg_cycles, overhead_us);
+
+                    // Reiniciar els comptadors de report
+                    report_cycle_sum = 0;
+                    report_count = 0;
+
+                    // Si hem acabat totes les mesures totals, senyalitzem la finalització
+                    if (Measurements_Total >= NUM_MEASUREMENTS_TOTAL) {
+                        measurement_done = true;
+                    }
+                }
+            }
+            
+            // 3. Lògica LED: LED2 ON, LED3 OFF
             led_set_level(LED2_GPIO, 1);
             led_set_level(LED3_GPIO, 0);
-            vTaskDelay(pdMS_TO_TICKS(1000)); // Causa cambio de contexto
+            vTaskDelay(pdMS_TO_TICKS(1000));
             
-            printf("[Mutex] LED2 OFF / LED3 ON\n");
-            led_set_level(LED2_GPIO, 0);
-            led_set_level(LED3_GPIO, 1);
-            vTaskDelay(pdMS_TO_TICKS(1000)); // Causa cambio de contexto
-            
-            // xSemaphoreGive() puede causar cambio de contexto
+            // 4. Punt de Mesura (Inici del Context Switch)
+            T_start_give = GET_CYCLE_COUNT();
+
+            // 5. Alliberar i cedir el control
             xSemaphoreGive(shared_mutex);
+            taskYIELD();
         }
     }
-}
-
-// --- FUNCIONES DE RASTREO (HOOKS DEL SCHEDULER) (TAREA 4) ---
-
-/**
- * @brief Hook llamado ANTES de que el kernel cambie de contexto. Mide T_inicio.
- */
-void vApplicationTaskSwitchOut(void) {
-    // Capturar el tiempo en microsegundos al salir de la tarea actual
-    task_switch_out_time = esp_timer_get_time();
-}
-
-/**
- * @brief Hook llamado DESPUÉS de que el kernel ha entrado en la nueva tarea. Mide T_fin y calcula Overhead.
- */
-void vApplicationTaskSwitchIn(void) {
-    // Capturar el tiempo en microsegundos al entrar a la nueva tarea
-    task_switch_in_time = esp_timer_get_time();
     
-    // Calcular el overhead: T_fin - T_inicio
-    int64_t overhead = task_switch_in_time - task_switch_out_time;
-    
-    // Imprimir el resultado (solo si es un cambio válido)
-    if (overhead > 0) {
-        printf("\n<<< MEDICIÓN DE OVERHEAD >>>\n");
-        printf("Task Entrante: %s\n", pcTaskGetName(NULL));
-        // El overhead incluye el tiempo dedicado a las instrucciones de la tarea de origen que provocan el salto de tarea, 
-        // más la interrupción del kernel (PendSV), más el tiempo que el scheduler tarda en decidir qué tarea es la siguiente en ejecutar, 
-        // más el cambio de contexto[cite: 22].
-        printf("Tiempo de Overhead del Scheduler: %lld µs\n", overhead); 
-        printf("<<< FIN MEDICIÓN >>>\n\n");
+    // --- Impressió del resultat FINAL (opcional) ---
+    if (Measurements_Total > 0) {
+        float avg_cycles_final = (float)Total_Mutex_Overhead_Cycles / (float)Measurements_Total;
+        float overhead_us_final = avg_cycles_final / CPU_FREQ_MHZ; 
+        
+        printf("\n============================================\n");
+        printf("<<< RESULTAT FINAL OVERHEAD MUTEX >>>\n");
+        printf("Total de mesures: %lu\n", (unsigned long)Measurements_Total);
+        printf("Mitjana FINAL: %.2f cicles (%.3f us)\n", avg_cycles_final, overhead_us_final);
+        printf("============================================\n");
     }
+    
+    led_set_level(LED2_GPIO, 0);
+    led_set_level(LED3_GPIO, 0);
+    vTaskDelete(NULL);
 }
 
 
-// --- FUNCIÓN PRINCIPAL app_main ---
+void LED3_Control_Task(void *pvParameters) {
+    printf("Configurant LED3...\n");
+    led_init(LED3_GPIO);
+    
+    // Tasca per a LED3
+    while (!measurement_done) {
+        
+        if (xSemaphoreTake(shared_mutex, portMAX_DELAY) == pdPASS) {
+            
+            // 1. Lògica LED: LED3 ON, LED2 OFF
+            led_set_level(LED3_GPIO, 1);
+            led_set_level(LED2_GPIO, 0);
+            vTaskDelay(pdMS_TO_TICKS(1000));
+            
+            // 2. Punt de Mesura (Inici del Context Switch)
+            T_start_give = GET_CYCLE_COUNT();
+
+            // 3. Alliberar i cedir el control
+            xSemaphoreGive(shared_mutex); 
+            taskYIELD();
+        }
+    }
+    
+    // Assegurar que LED2_Control_Task acabi la impressió final
+    vTaskDelay(pdMS_TO_TICKS(100)); 
+    vTaskDelete(NULL); 
+}
+
+
+// --- FUNCIÓ PRINCIPAL app_main ---
 
 void app_main() {
-    // Crear el Mutex (soporta Priority Inheritance)
+    printf("Iniciant aplicació de LEDs i mesurament continu d'overhead (Report cada %d)...\n", REPORT_FREQUENCY);
+
     shared_mutex = xSemaphoreCreateMutex();
     
     if (shared_mutex != NULL) {
-        // Tarea 1: Intermitencia (Independiente)
-        xTaskCreate(led_blink_task_1, "LED1_Blink", 2048, NULL, 5, NULL);
+        const UBaseType_t UX_ALTERNATE_PRIORITY = 5; 
+        const UBaseType_t UX_BLINK_PRIORITY = 3; 
+
+        xTaskCreate(led_blink_task_1, "LED1_Blink", 2048, NULL, UX_BLINK_PRIORITY, NULL);
+        xTaskCreate(LED2_Control_Task, "LED2_Control", 4096, NULL, UX_ALTERNATE_PRIORITY, NULL);
+        xTaskCreate(LED3_Control_Task, "LED3_Control", 4096, NULL, UX_ALTERNATE_PRIORITY, NULL);
         
-        // Tarea 2/3: Alternancia (Protegida por Mutex)
-        xTaskCreate(led_alternate_task_2_3_mutex, "LED23_Alternate", 2048, NULL, 5, NULL);
-        
-        printf("Sistema de LEDs (Tarea 2) instrumentado (Tarea 4) y listo para medir el Overhead.\n");
+        printf("Tasques creades. L'alternança s'aturarà després de %d mesures.\n", NUM_MEASUREMENTS_TOTAL);
+
     } else {
          printf("ERROR: Fallo al crear el Mutex.\n");
     }

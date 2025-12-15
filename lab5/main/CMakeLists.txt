@@ -1,4 +1,4 @@
-set(srcs "4_overhead.c")
+set(srcs "5_priority.c")
 idf_component_register(SRCS ${srcs}
                     INCLUDE_DIRS "."
                     PRIV_REQUIRES console esp_timer driver)

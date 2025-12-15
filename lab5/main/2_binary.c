@@ -51,34 +51,39 @@ void led_blink_task_1(void *pvParameters) {
 
 SemaphoreHandle_t shared_binary_semaphore;
 
-void led_alternate_task_2_3_binary(void *pvParameters) {
+// Tarea 2: Enciende LED2 y apaga LED3 (Ciclo 1)
+void led_control_task_2_binary(void *pvParameters) {
     led_init(LED2_GPIO); 
-    led_init(LED3_GPIO);
-    
     while (1) {
-        // 1. Intentar adquirir el Semáforo Binario (espera si no está disponible)
         if (xSemaphoreTake(shared_binary_semaphore, portMAX_DELAY) == pdPASS) {
-            
-            // Sección Crítica: Alternancia de 1 segundo (1000 ms)
-            
-            printf("[Binary] LED2 ON / LED3 OFF\n");
+            printf("[Binary-T2] LED2 ON / LED3 OFF\n");
             led_set_level(LED2_GPIO, 1);
             led_set_level(LED3_GPIO, 0);
-            vTaskDelay(pdMS_TO_TICKS(1000));
-
-            printf("[Binary] LED2 OFF / LED3 ON\n");
-            led_set_level(LED2_GPIO, 0);
-            led_set_level(LED3_GPIO, 1);
-            vTaskDelay(pdMS_TO_TICKS(1000));
+            vTaskDelay(pdMS_TO_TICKS(1000)); 
             
-            // 2. Liberar el Semáforo Binario
             xSemaphoreGive(shared_binary_semaphore);
         }
+        vTaskDelay(pdMS_TO_TICKS(50));
+    }
+}
+
+// Tarea 3: Enciende LED3 y apaga LED2 (Ciclo 2)
+void led_control_task_3_binary(void *pvParameters) {
+    led_init(LED3_GPIO);
+    while (1) {
+        if (xSemaphoreTake(shared_binary_semaphore, portMAX_DELAY) == pdPASS) {
+            printf("[Binary-T3] LED2 OFF / LED3 ON\n");
+            led_set_level(LED2_GPIO, 0);
+            led_set_level(LED3_GPIO, 1);
+            vTaskDelay(pdMS_TO_TICKS(1000)); 
+            
+            xSemaphoreGive(shared_binary_semaphore);
+        }
+        vTaskDelay(pdMS_TO_TICKS(50));
     }
 }
 
 void app_main() {
-    // Tarea 1: Intermitencia (Independiente)
     xTaskCreate(led_blink_task_1, "LED1_Blink", 2048, NULL, 5, NULL);
     
     // Crear el Semáforo Binario
@@ -88,7 +93,8 @@ void app_main() {
         // Inicializar el semáforo a 1 (disponible) para usarlo como Mutex
         xSemaphoreGive(shared_binary_semaphore); 
 
-        // Tarea 2/3: Alternancia (Protegida por Semáforo Binario)
-        xTaskCreate(led_alternate_task_2_3_binary, "LED23_Alternate_B", 2048, NULL, 5, NULL);
+        // Tareas 2 y 3 compiten por el Semáforo Binario
+        xTaskCreate(led_control_task_2_binary, "LED_Control_2_B", 2048, NULL, 5, NULL);
+        xTaskCreate(led_control_task_3_binary, "LED_Control_3_B", 2048, NULL, 5, NULL);
     }
 }
